@@ -5,9 +5,10 @@
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
 
-ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
+ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), car01(NULL), car02(NULL)
 {
-	turn = acceleration = brake = 0.0f;
+	car01Prop.turn = car01Prop.acceleration = car01Prop.brake = 0.0f;
+	car02Prop.turn = car02Prop.acceleration = car02Prop.brake = 0.0f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -17,6 +18,42 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
+
+	VehicleInfo car = DefineVehickleInfo();
+
+	car01 = App->physics->AddVehicle(car);
+	car01->SetPos(0, 12, 10);
+
+	car02 = App->physics->AddVehicle(car);
+	car02->SetPos(0, 12, -10);
+	
+	return true;
+}
+
+// Unload assets
+bool ModulePlayer::CleanUp()
+{
+	LOG("Unloading player");
+
+	return true;
+}
+
+// Update: draw background
+update_status ModulePlayer::Update(float dt)
+{
+	UpdateCar01();
+	UpdateCar02();
+
+	char title[80];
+	sprintf_s(title, "%.1f Km/h, %.1f Km/h", car01->GetKmh(), car02->GetKmh());
+	App->window->SetTitle(title);
+
+	return UPDATE_CONTINUE;
+}
+
+
+VehicleInfo ModulePlayer::DefineVehickleInfo()
+{
 
 	VehicleInfo car;
 
@@ -41,10 +78,10 @@ bool ModulePlayer::Start()
 
 	float half_width = car.chassis_size.x*0.5f;
 	float half_length = car.chassis_size.z*0.5f;
-	
-	vec3 direction(0,-1,0);
-	vec3 axis(-1,0,0);
-	
+
+	vec3 direction(0, -1, 0);
+	vec3 axis(-1, 0, 0);
+
 	car.num_wheels = 4;
 	car.wheels = new Wheel[4];
 
@@ -96,59 +133,71 @@ bool ModulePlayer::Start()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
-	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 10);
-	
-	return true;
+	return car;
 }
 
-// Unload assets
-bool ModulePlayer::CleanUp()
+void ModulePlayer::UpdateCar01()
 {
-	LOG("Unloading player");
+	car01Prop.turn = car01Prop.acceleration = car01Prop.brake = 0.0f;
 
-	return true;
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		car01Prop.acceleration = MAX_ACCELERATION;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		if (car01Prop.turn < TURN_DEGREES)
+			car01Prop.turn += TURN_DEGREES;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		if (car01Prop.turn > -TURN_DEGREES)
+			car01Prop.turn -= TURN_DEGREES;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		car01Prop.brake = BRAKE_POWER;
+	}
+
+	car01->ApplyEngineForce(car01Prop.acceleration);
+	car01->Turn(car01Prop.turn);
+	car01->Brake(car01Prop.brake);
+
+	car01->Render();
 }
 
-// Update: draw background
-update_status ModulePlayer::Update(float dt)
+void ModulePlayer::UpdateCar02()
 {
-	turn = acceleration = brake = 0.0f;
+	car02Prop.turn = car02Prop.acceleration = car02Prop.brake = 0.0f;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_REPEAT)
 	{
-		acceleration = MAX_ACCELERATION;
+		car02Prop.acceleration = MAX_ACCELERATION;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
 	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
+		if (car02Prop.turn < TURN_DEGREES)
+			car02Prop.turn += TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
 	{
-		if(turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
+		if (car02Prop.turn > -TURN_DEGREES)
+			car02Prop.turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
 	{
-		brake = BRAKE_POWER;
+		car02Prop.brake = BRAKE_POWER;
 	}
 
-	vehicle->ApplyEngineForce(acceleration);
-	vehicle->Turn(turn);
-	vehicle->Brake(brake);
-
-	vehicle->Render();
-
-	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
-	App->window->SetTitle(title);
-
-	return UPDATE_CONTINUE;
+	car02->ApplyEngineForce(car02Prop.acceleration);
+	car02->Turn(car02Prop.turn);
+	car02->Brake(car02Prop.brake);
+		
+	car02->Render();
 }
-
-
-

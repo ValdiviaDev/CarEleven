@@ -9,6 +9,13 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
 
+struct VehicleProperties {
+	float turn;
+	float acceleration;
+	float brake;
+};
+
+
 class ModulePlayer : public Module
 {
 public:
@@ -19,10 +26,18 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	//Vehicle info
+	VehicleInfo DefineVehickleInfo();
+
+	//Update cars
+	void UpdateCar01();
+	void UpdateCar02();
+
 public:
 
-	PhysVehicle3D* vehicle;
-	float turn;
-	float acceleration;
-	float brake;
+	PhysVehicle3D* car01;
+	PhysVehicle3D* car02;
+	VehicleProperties car01Prop;
+	VehicleProperties car02Prop;
+	
 };
