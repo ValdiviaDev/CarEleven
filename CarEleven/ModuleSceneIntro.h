@@ -21,13 +21,17 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	//Death sensor
+	void CreateDeathSensor();
+
 	//Ring
 	void DefineRing();
 	void UpdateRing();
 
 public:
-	Cube s;
-	PhysBody3D* sensor;
+	Cube deathSensor;
+	PhysBody3D* deathSensorPB;
 
 	Cylinder ring;
+	PhysBody3D* ringPB;
 };
