@@ -21,18 +21,36 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	//Render primitives
+	void RenderPrimitives();
+
 	//Death sensor
 	void CreateDeathSensor();
 
+	//Rotating constraint
+	void CreateRotatingConstraints();
+	void UpdateRotatingConstraints();
+
 	//Ring
 	void DefineRing();
-	void UpdateRing();
+
+	//Functions to create physics primitives
+	Cube CreateCube(vec3 size, vec3 pos, Color color, float mass = 0.0f, bool draw = true, bool isPhysicsObject = true, bool rotate = false, float angleToRot = 0.0f, vec3  axisToRot = (0.0f, 1.0f, 0.0f));
+	Cylinder CreateCylinder(float radius, float height, vec3 pos, Color color, float mass = 0.0f, bool draw = true, bool isPhysicsObject = true, bool rotate = false, float angleToRot = 0.0f, vec3  axisToRot = (0.0f, 1.0f, 0.0f));
+	Sphere CreateSphere(float radius, vec3 pos, Color color, float mass = 0.0f, bool draw = true, bool isPhysicsObject = true, bool rotate = false, float angleToRot = 0.0f, vec3  axisToRot = (0.0f, 1.0f, 0.0f));
 
 public:
-	Cube deathSensor;
+
+	//Death sensor
 	PhysBody3D* deathSensorPB;
 
-	Cylinder ring;
-	Cube cubeRing;
-	PhysBody3D* ringPB;
+	//Constraints
+	Cylinder constrBase;
+	Cube constrMovingObject;
+
+	//Objects to render
+	p2List<Cube> cubesToRender;
+	p2List<Cylinder> cylindersToRender;
+	p2List<Sphere> spheresToRender;
+
 };

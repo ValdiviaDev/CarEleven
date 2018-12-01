@@ -28,6 +28,9 @@ bool ModuleSceneIntro::Start()
 	//Ring
 	DefineRing();
 
+	//Constraints
+	CreateRotatingConstraints();
+
 	return ret;
 }
 
@@ -42,8 +45,10 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	//Render everything on scene
+	RenderPrimitives();
 
-	UpdateRing();
+	//UpdateRotatingConstraints();
 
 	return UPDATE_CONTINUE;
 }
@@ -60,9 +65,25 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	//LOG("Hit!");
 }
 
+void ModuleSceneIntro::RenderPrimitives()
+{
+	//Render cubes
+	for (p2List_item<Cube>* item = cubesToRender.getFirst(); item; item = item->next)
+		item->data.Render();
+
+	//Render cylinders
+	for (p2List_item<Cylinder>* item = cylindersToRender.getFirst(); item; item = item->next)
+		item->data.Render();
+
+	//Render spheres
+	for (p2List_item<Sphere>* item = spheresToRender.getFirst(); item; item = item->next)
+		item->data.Render();
+
+}
+
 void ModuleSceneIntro::CreateDeathSensor()
 {
-	deathSensor.size = vec3(200.0f, 5.0f, 200.0f);
+	Cube deathSensor(200.0f, 5.0f, 200.0f);
 	deathSensor.SetPos(0.0f, -10.0f, 0.0f);
 
 	deathSensorPB = App->physics->AddBody(deathSensor, 0.0f);
@@ -70,26 +91,79 @@ void ModuleSceneIntro::CreateDeathSensor()
 	deathSensorPB->collision_listeners.add(this);
 }
 
+void ModuleSceneIntro::CreateRotatingConstraints()
+{
+
+	constrMovingObject = CreateCube(vec3(2.0f, 1.0f, 40.0f), vec3(4.0f, 3.0f, 4.0f), { 0,255,0,255 });
+
+}
+
+void ModuleSceneIntro::UpdateRotatingConstraints()
+{
+
+
+}
+
 void ModuleSceneIntro::DefineRing()
 {
 	//Ring printing in the form of a cylinder
-	ring.radius = 40.0f;
-	ring.height = 80.0f;
-	ring.SetPos(0.0f, - ring.height/2, 0.0f);
-	ring.SetRotation(90.0f, vec3(0.0f, 0.0f, 1.0f));
-	
-	ring.color = { 0,255,255, 255 };
+	CreateCylinder(40.0f, 80.f, vec3(0.0f, -40.f, 0.0f), { 0,255,255, 255 }, 0.0f, true, false, true, 90.0f, vec3(0.0f, 0.0f, 1.0f));
 
 	//Physbody in the form of a cube
-	cubeRing = Cube(80.0f, 0.0f, 80.0f);
-	ringPB = App->physics->AddBody(cubeRing, 0.0f);
-	cubeRing = Cube(80.0f, -1.0f, 80.0f);
-	cubeRing.color = { 255,0,0,255 };
+	CreateCube(vec3(80.0f, 0.0f, 80.0f), vec3(0.0f, -0.1f, 0.0f), { 255,0,0,255 });
 }
 
-void ModuleSceneIntro::UpdateRing()
+Cube ModuleSceneIntro::CreateCube(vec3 size, vec3 pos, Color color, float mass, bool draw, bool isPhysicsObject, bool rotate, float angleToRot, vec3  axisToRot)
 {
-	ring.Render();
-	cubeRing.Render();
+	Cube cube(size.x, size.y, size.z);
+	cube.SetPos(pos.x, pos.y, pos.z);
+	cube.color = color;
+
+	if (rotate)
+		cube.SetRotation(angleToRot, vec3(axisToRot.x, axisToRot.y, axisToRot.z));
+
+	if (draw)
+		cubesToRender.add(cube);
+
+	if (isPhysicsObject) 
+		App->physics->AddBody(cube, mass);
+
+	return cube;
+}
+
+Cylinder ModuleSceneIntro::CreateCylinder(float radius, float height, vec3 pos, Color color, float mass, bool draw, bool isPhysicsObject, bool rotate, float angleToRot, vec3 axisToRot)
+{
+	Cylinder cylinder(radius, height);
+	cylinder.SetPos(pos.x, pos.y, pos.z);
+	cylinder.color = color;
+
+	if(rotate)
+		cylinder.SetRotation(angleToRot, vec3(axisToRot.x, axisToRot.y, axisToRot.z));
+
+	if (draw)
+		cylindersToRender.add(cylinder);
+
+	if (isPhysicsObject)
+		App->physics->AddBody(cylinder, mass);
+
+	return cylinder;
+}
+
+Sphere ModuleSceneIntro::CreateSphere(float radius, vec3 pos, Color color, float mass, bool draw, bool isPhysicsObject, bool rotate, float angleToRot, vec3 axisToRot)
+{
+	Sphere sphere(radius);
+	sphere.SetPos(pos.x, pos.y, pos.z);
+	sphere.color = color;
+
+	if (rotate)
+		sphere.SetRotation(angleToRot, vec3(axisToRot.x, axisToRot.y, axisToRot.z));
+
+	if (draw)
+		spheresToRender.add(sphere);
+
+	if(isPhysicsObject)
+		App->physics->AddBody(sphere, mass);
+
+	return sphere;
 }
 
