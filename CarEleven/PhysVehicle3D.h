@@ -2,6 +2,7 @@
 
 #include "PhysBody3D.h"
 #include "glmath.h"
+#include "Color.h"
 
 class btRaycastVehicle;
 struct PhysBody3D;
@@ -36,6 +37,8 @@ struct VehicleInfo
 
 	Wheel* wheels;
 	int num_wheels;
+
+	Color chassisColour = { 255,255,255,255 };
 };
 
 

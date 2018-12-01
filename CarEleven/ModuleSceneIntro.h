@@ -33,5 +33,6 @@ public:
 	PhysBody3D* deathSensorPB;
 
 	Cylinder ring;
+	Cube cubeRing;
 	PhysBody3D* ringPB;
 };

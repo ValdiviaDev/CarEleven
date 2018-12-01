@@ -78,15 +78,18 @@ void ModuleSceneIntro::DefineRing()
 	ring.SetPos(0.0f, - ring.height/2, 0.0f);
 	ring.SetRotation(90.0f, vec3(0.0f, 0.0f, 1.0f));
 	
-	ring.color = { 0,0255,255 };
+	ring.color = { 0,255,255, 255 };
 
 	//Physbody in the form of a cube
-	Cube cubeCollider(80.0f, 0.0f, 80.0f);
-	ringPB = App->physics->AddBody(cubeCollider, 0.0f);
+	cubeRing = Cube(80.0f, 0.0f, 80.0f);
+	ringPB = App->physics->AddBody(cubeRing, 0.0f);
+	cubeRing = Cube(80.0f, -1.0f, 80.0f);
+	cubeRing.color = { 255,0,0,255 };
 }
 
 void ModuleSceneIntro::UpdateRing()
 {
 	ring.Render();
+	cubeRing.Render();
 }
 

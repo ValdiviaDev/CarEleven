@@ -21,9 +21,11 @@ bool ModulePlayer::Start()
 
 	VehicleInfo car = DefineVehickleInfo();
 
+	car.chassisColour = { 255,0,0,255 }; //Colour for car 1
 	car01 = App->physics->AddVehicle(car);
 	car01->SetPos(0, 12, 10);
 
+	car.chassisColour = { 0,255,0,255 };	//Colour for car 2
 	car02 = App->physics->AddVehicle(car);
 	car02->SetPos(0, 12, -10);
 	
