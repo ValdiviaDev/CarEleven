@@ -48,6 +48,11 @@ void PhysBody3D::SetPos(float x, float y, float z)
 	body->setWorldTransform(t);
 }
 
+btRigidBody* PhysBody3D::GetBody() const
+{
+	return body;
+}
+
 // ---------------------------------------------------------
 void PhysBody3D::SetAsSensor(bool is_sensor)
 {

@@ -93,8 +93,18 @@ void ModuleSceneIntro::CreateDeathSensor()
 
 void ModuleSceneIntro::CreateRotatingConstraints()
 {
+	constrMovingObject = CreateCube(vec3(2.0f, 1.0f, 30.0f), vec3(-30.0f, 1.0f, 30.0f), { 0,255,0,255 }, 0.0f, true, false);
+	contrMovingObjectPB = App->physics->AddBody(constrMovingObject, 10.0f);
 
-	constrMovingObject = CreateCube(vec3(2.0f, 1.0f, 40.0f), vec3(4.0f, 3.0f, 4.0f), { 0,255,0,255 });
+	constrBase = CreateCylinder(1.0f, 5.0f, vec3(-30.0f, 1.0f, 30.0f), { 0,255,0,255 }, 0.0f, true, false, true, 90.0f, vec3(0.0f, 0.0f, 1.0f));
+	constrBasePB = App->physics->AddBody(constrBase, 10.0f);
+	CreateCylinder(1.0f, 1.0f, vec3(-30.0f, 1.5f, 30.0f), { 0,255,0,255 }, 0.0f, true, true, true, 90.0f, vec3(0.0f, 0.0f, 1.0f));
+	
+	contrMovingObjectPB->GetBody()->setLinearFactor(btVector3(0.0f, 0.0f, 0.0f));
+	constrBasePB->GetBody()->setLinearFactor(btVector3(0.0f, 0.0f, 0.0f));
+
+
+	App->physics->AddConstraintHinge(*contrMovingObjectPB, *constrBasePB, vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), true, true);
 
 }
 

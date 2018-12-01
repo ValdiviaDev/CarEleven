@@ -47,6 +47,9 @@ public:
 	//Constraints
 	Cylinder constrBase;
 	Cube constrMovingObject;
+	PhysBody3D* constrBasePB;
+	PhysBody3D* contrMovingObjectPB;
+
 
 	//Objects to render
 	p2List<Cube> cubesToRender;
