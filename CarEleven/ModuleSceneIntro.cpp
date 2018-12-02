@@ -29,7 +29,7 @@ bool ModuleSceneIntro::Start()
 	DefineRing();
 
 	//Constraints
-	CreateRotatingConstraints();
+	CreateRotatingConstraint(rotConstraint01, rotConstraint01PB, vec3(2.0f, 1.0f, 30.0f), vec3(-30.0f, 2.0f, 30.0f), 5.0f, 100000.0f, { 0,255,0,255 });
 
 	return ret;
 }
@@ -45,10 +45,12 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	UpdateRotatingConstraints();
+
 	//Render everything on scene
 	RenderPrimitives();
 
-	//UpdateRotatingConstraints();
+
 
 	return UPDATE_CONTINUE;
 }
@@ -91,26 +93,24 @@ void ModuleSceneIntro::CreateDeathSensor()
 	deathSensorPB->collision_listeners.add(this);
 }
 
-void ModuleSceneIntro::CreateRotatingConstraints()
+void ModuleSceneIntro::CreateRotatingConstraint(Cube& constraintCube, PhysBody3D*& constraintPB, vec3 size, vec3 pos, float velocity, float mass, Color color)
 {
-	constrMovingObject = CreateCube(vec3(2.0f, 1.0f, 30.0f), vec3(-30.0f, 2.0f, 30.0f), { 0,255,0,255 }, 0.0f, true, false);
-	contrMovingObjectPB = App->physics->AddBody(constrMovingObject, 10000.0f);
+	constraintCube = CreateCube(vec3(size), vec3(pos), color, 0.0f, false, false);
+	constraintPB = App->physics->AddBody(rotConstraint01, mass);
 
-	constrBase = CreateCylinder(30.0f, 10.0f, vec3(-30.0f, 100.0f, 30.0f), { 0,255,0,255 }, 0.0f, false, false, true, 90.0f, vec3(0.0f, 0.0f, 1.0f));
-	constrBasePB = App->physics->AddBody(constrBase, 10000.0f);
-	//CreateCylinder(1.0f, 1.0f, vec3(-30.0f, 1.5f, 30.0f), { 0,255,0,255 }, 0.0f, true, true, true, 90.0f, vec3(0.0f, 0.0f, 1.0f));
+	Cylinder constraintRotator = CreateCylinder(size.z, 10.0f, vec3(size.x, size.y + 100.0f, size.z), color, 0.0f, false, false, true, 90.0f, vec3(0.0f, 0.0f, 1.0f));
+	PhysBody3D* constraintRotatorPB = App->physics->AddBody(constraintRotator, mass);
 	
-	contrMovingObjectPB->GetBody()->setLinearFactor(btVector3(0.0f, 0.0f, 0.0f));
-	constrBasePB->GetBody()->setLinearFactor(btVector3(0.0f, 0.0f, 0.0f));
+	constraintPB->GetBody()->setLinearFactor(btVector3(0.0f, 0.0f, 0.0f));
+	constraintRotatorPB->GetBody()->setLinearFactor(btVector3(0.0f, 0.0f, 0.0f));
 
-
-	App->physics->AddConstraintHinge(*contrMovingObjectPB, *constrBasePB, vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), true, true, 3.0f);
+	App->physics->AddConstraintHinge(*constraintPB, *constraintRotatorPB, vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), vec3(0.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f), true, true, velocity);
 }
 
 void ModuleSceneIntro::UpdateRotatingConstraints()
 {
-
-
+	rotConstraint01PB->GetTransform(&rotConstraint01.transform);
+	rotConstraint01.Render();
 }
 
 void ModuleSceneIntro::DefineRing()

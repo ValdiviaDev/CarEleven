@@ -28,7 +28,7 @@ public:
 	void CreateDeathSensor();
 
 	//Rotating constraint
-	void CreateRotatingConstraints();
+	void CreateRotatingConstraint(Cube& constraintCube, PhysBody3D*& constraintPB, vec3 size, vec3 pos, float velocity = 3.0f, float mass = 100000.0f, Color color = { 0,255,0,255 });
 	void UpdateRotatingConstraints();
 
 	//Ring
@@ -45,10 +45,8 @@ public:
 	PhysBody3D* deathSensorPB;
 
 	//Constraints
-	Cylinder constrBase;
-	Cube constrMovingObject;
-	PhysBody3D* constrBasePB;
-	PhysBody3D* contrMovingObjectPB;
+	Cube rotConstraint01;
+	PhysBody3D* rotConstraint01PB;
 
 
 	//Objects to render
