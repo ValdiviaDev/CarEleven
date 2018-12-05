@@ -44,6 +44,12 @@ bool ModuleAudio::Init()
 	return ret;
 }
 
+bool ModuleAudio::Start()
+{
+	ChargeFX();
+	return true;
+}
+
 // Called before quitting
 bool ModuleAudio::CleanUp()
 {
@@ -153,4 +159,15 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+
+void ModuleAudio::ChargeFX()
+{
+	gameSounds.boostSound = LoadFx("Assets/Audio/FX/boost_short.wav");
+	gameSounds.constraintCollision = LoadFx("Assets/Audio/FX/constraint_collision.wav");
+}
+
+GameSounds ModuleAudio::GetFX()
+{
+	return gameSounds;
 }

@@ -37,14 +37,14 @@ public:
 	void UpdateCar01();
 	void UpdateCar02();
 
-public:
+	//Get car
+	PhysVehicle3D* GetCar(uint carNum); 
+
+private:
 
 	PhysVehicle3D* car01;
 	PhysVehicle3D* car02;
 	VehicleProperties car01Prop;
 	VehicleProperties car02Prop;
 
-private:
-	float initialCar01Transform = 0.0f;
-	float initialCar02Transform = 0.0f;
 };

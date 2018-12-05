@@ -52,21 +52,32 @@ update_status ModuleSceneIntro::Update(float dt)
 	//Render everything on scene
 	RenderPrimitives();
 
-
-
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body2 == (PhysBody3D*)App->player->car01 && body1 == deathSensorPB)
+	PhysVehicle3D* car01 = App->player->GetCar(1);
+	PhysVehicle3D* car02 = App->player->GetCar(2);
+
+	//Death collider
+	if (body2 == (PhysBody3D*)car01 && body1 == deathSensorPB)
 		App->player->ResetCar(1);
 
-	if (body2 == (PhysBody3D*)App->player->car02 && body1 == deathSensorPB)
+	if (body2 == (PhysBody3D*)car02 && body1 == deathSensorPB)
 		App->player->ResetCar(2);
 
+	//Collision with constraints (play sound)
+	for (uint i = 0; i < 4; i++) {
+		if (body2 == (PhysBody3D*)car01 && body1 == rotConstraintPB[i])
+			App->audio->PlayFx(App->audio->GetFX().constraintCollision, 0);
+	}
 
-	//LOG("Hit!");
+	for (uint i = 0; i < 4; i++) {
+		if (body2 == (PhysBody3D*)car02 && body1 == rotConstraintPB[i])
+			App->audio->PlayFx(App->audio->GetFX().constraintCollision, 0);
+	}
+
 }
 
 void ModuleSceneIntro::RenderPrimitives()
@@ -106,6 +117,11 @@ void ModuleSceneIntro::CreateLevelConstraints()
 	CreateRotatingConstraint(1, vec3(2.0f, 2.0f, 20.0f), vec3(-30.0f, 2.0f, -30.0f), -5.0f, 100000.0f, { 0,0,255,255 });
 	CreateRotatingConstraint(2, vec3(2.0f, 2.0f, 20.0f), vec3(30.0f, 2.0f, 30.0f), -5.0f, 100000.0f, { 0,0,255,255 });
 	CreateRotatingConstraint(3, vec3(2.0f, 2.0f, 20.0f), vec3(30.0f, 2.0f, -30.0f), 5.0f, 100000.0f, { 0,0,255,255 });
+
+	//Adding the constraints to the collision listeners
+	for (int i = 0; i < 4; i++)
+		rotConstraintPB[i]->collision_listeners.add(this);
+
 }
 
 void ModuleSceneIntro::CreateRotatingConstraint(int index, vec3 size, vec3 pos, float velocity, float mass, Color color)

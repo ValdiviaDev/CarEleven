@@ -40,11 +40,14 @@ update_status ModulePlayer::Update(float dt)
 	UpdateCar01();
 	UpdateCar02();
 
+	//Boost
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		car01->ApplyEngineForce(1000000.0f);
-
+		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
+		car01->ApplyEngineForce(100000000.0f);
 		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
 	}
+
+	//Title
     char title[80];
     sprintf_s(title, "%.1f Km/h, %.1f Km/h", car01->GetKmh(), car02->GetKmh());
     App->window->SetTitle(title);
@@ -247,4 +250,20 @@ void ModulePlayer::UpdateCar02()
 	car02->Brake(car02Prop.brake);
 		
 	car02->Render();
+}
+
+PhysVehicle3D * ModulePlayer::GetCar(uint carNum)
+{
+	switch (carNum) {
+	case 1:
+		return car01;
+		break;
+	case 2:
+		return car02;
+		break;
+	default:
+		return nullptr;
+		break;
+	}
+	return nullptr;
 }
