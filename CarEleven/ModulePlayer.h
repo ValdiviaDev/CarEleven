@@ -29,6 +29,10 @@ public:
 	//Vehicle info
 	VehicleInfo DefineVehickleInfo();
 
+	//Create car
+	void CreateCar(uint carNum); //Uint is the number of the car
+	void ResetCar(uint carNum);
+
 	//Update cars
 	void UpdateCar01();
 	void UpdateCar02();

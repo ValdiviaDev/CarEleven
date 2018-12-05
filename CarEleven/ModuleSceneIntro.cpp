@@ -31,6 +31,8 @@ bool ModuleSceneIntro::Start()
 	//Constraints
 	CreateLevelConstraints();
 
+	App->audio->PlayMusic("Assets/Audio/Music/level_theme.ogg");
+
 	return ret;
 }
 
@@ -58,10 +60,10 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	if (body2 == (PhysBody3D*)App->player->car01 && body1 == deathSensorPB)
-		App->player->car01->SetPos(0, 12, 10);
+		App->player->ResetCar(1);
 
 	if (body2 == (PhysBody3D*)App->player->car02 && body1 == deathSensorPB)
-		App->player->car02->SetPos(0, 12, -10);
+		App->player->ResetCar(2);
 
 
 	//LOG("Hit!");

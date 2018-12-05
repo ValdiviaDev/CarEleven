@@ -19,16 +19,10 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	VehicleInfo car = DefineVehickleInfo();
-
-	car.chassisColour = { 255,0,0,255 }; //Colour for car 1
-	car01 = App->physics->AddVehicle(car);
-	car01->SetPos(0, 12, 10);
-
-	car.chassisColour = { 0,255,0,255 };	//Colour for car 2
-	car02 = App->physics->AddVehicle(car);
-	car02->SetPos(0, 12, -10);
-	
+	//Car creation
+	CreateCar(1);
+	CreateCar(2);
+		
 	return true;
 }
 
@@ -46,9 +40,9 @@ update_status ModulePlayer::Update(float dt)
 	UpdateCar01();
 	UpdateCar02();
 
-	char title[80];
-	sprintf_s(title, "%.1f Km/h, %.1f Km/h", car01->GetKmh(), car02->GetKmh());
-	App->window->SetTitle(title);
+    char title[80];
+    sprintf_s(title, "%.1f Km/h, %.1f Km/h", car01->GetKmh(), car02->GetKmh());
+    App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
 }
@@ -136,6 +130,50 @@ VehicleInfo ModulePlayer::DefineVehickleInfo()
 	car.wheels[3].steering = false;
 
 	return car;
+}
+
+void ModulePlayer::CreateCar(uint carNum)
+{
+	VehicleInfo car = DefineVehickleInfo();
+
+	switch (carNum) {
+	case 1:
+		car.chassisColour = { 255,0,0,255 }; //Colour for car 1
+		car01 = App->physics->AddVehicle(car);
+		car01->SetPos(0, 12, 10);
+		break;
+
+	case 2:
+		car.chassisColour = { 0,255,0,255 };	//Colour for car 2
+		car02 = App->physics->AddVehicle(car);
+		car02->SetPos(0, 12, -10);
+		break;
+
+	default:
+		break;
+	}
+
+}
+
+void ModulePlayer::ResetCar(uint carNum)
+{
+	switch (carNum) {
+	case 1:
+		App->player->car01->SetPos(0, 12, 10);
+		App->player->car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		App->player->car01->vehicle->getRigidBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		break;
+
+	case 2:
+		car02->SetPos(0, 12, -10);
+		App->player->car02->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		App->player->car02->vehicle->getRigidBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		break;
+
+	default:
+		break;
+	}
+
 }
 
 void ModulePlayer::UpdateCar01()
