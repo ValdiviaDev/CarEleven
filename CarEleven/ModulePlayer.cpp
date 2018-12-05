@@ -40,6 +40,11 @@ update_status ModulePlayer::Update(float dt)
 	UpdateCar01();
 	UpdateCar02();
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		car01->ApplyEngineForce(1000000.0f);
+
+		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
+	}
     char title[80];
     sprintf_s(title, "%.1f Km/h, %.1f Km/h", car01->GetKmh(), car02->GetKmh());
     App->window->SetTitle(title);
@@ -141,6 +146,7 @@ void ModulePlayer::CreateCar(uint carNum)
 		car.chassisColour = { 255,0,0,255 }; //Colour for car 1
 		car01 = App->physics->AddVehicle(car);
 		car01->SetPos(0, 12, 10);
+		//car01->GetTransform(&initialCar01Transform);
 		break;
 
 	case 2:
@@ -159,15 +165,16 @@ void ModulePlayer::ResetCar(uint carNum)
 {
 	switch (carNum) {
 	case 1:
-		App->player->car01->SetPos(0, 12, 10);
-		App->player->car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
-		App->player->car01->vehicle->getRigidBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		car01->SetPos(0, 12, 10);
+		//car01->SetTransform(&initialCar01Transform);
+		car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
 		break;
 
 	case 2:
 		car02->SetPos(0, 12, -10);
-		App->player->car02->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
-		App->player->car02->vehicle->getRigidBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+		car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
 		break;
 
 	default:
