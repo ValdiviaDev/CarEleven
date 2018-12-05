@@ -102,10 +102,10 @@ void ModuleSceneIntro::CreateLevelConstraints()
 		rotConstraintPB[i] = nullptr;
 
 	//Level rotating constraitns
-	CreateRotatingConstraint(0, vec3(2.0f, 1.0f, 20.0f), vec3(-30.0f, 2.0f, 30.0f), 5.0f, 100000.0f, { 0,0,255,255 });
-	CreateRotatingConstraint(1, vec3(2.0f, 1.0f, 20.0f), vec3(-30.0f, 2.0f, -30.0f), -5.0f, 100000.0f, { 0,0,255,255 });
-	CreateRotatingConstraint(2, vec3(2.0f, 1.0f, 20.0f), vec3(30.0f, 2.0f, 30.0f), -5.0f, 100000.0f, { 0,0,255,255 });
-	CreateRotatingConstraint(3, vec3(2.0f, 1.0f, 20.0f), vec3(30.0f, 2.0f, -30.0f), 5.0f, 100000.0f, { 0,0,255,255 });
+	CreateRotatingConstraint(0, vec3(2.0f, 2.0f, 20.0f), vec3(-30.0f, 2.0f, 30.0f), 5.0f, 100000.0f, { 0,0,255,255 });
+	CreateRotatingConstraint(1, vec3(2.0f, 2.0f, 20.0f), vec3(-30.0f, 2.0f, -30.0f), -5.0f, 100000.0f, { 0,0,255,255 });
+	CreateRotatingConstraint(2, vec3(2.0f, 2.0f, 20.0f), vec3(30.0f, 2.0f, 30.0f), -5.0f, 100000.0f, { 0,0,255,255 });
+	CreateRotatingConstraint(3, vec3(2.0f, 2.0f, 20.0f), vec3(30.0f, 2.0f, -30.0f), 5.0f, 100000.0f, { 0,0,255,255 });
 }
 
 void ModuleSceneIntro::CreateRotatingConstraint(int index, vec3 size, vec3 pos, float velocity, float mass, Color color)
