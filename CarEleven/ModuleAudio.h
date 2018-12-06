@@ -10,6 +10,7 @@ typedef unsigned int FX;
 struct GameSounds {
 	FX boostSound;
 	FX constraintCollision;
+	FX deathSound;
 };
 
 class ModuleAudio : public Module
