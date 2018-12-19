@@ -47,4 +47,10 @@ private:
 	VehicleProperties car01Prop;
 	VehicleProperties car02Prop;
 
+	mat4x4 rot180 = mat4x4(
+		-1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, -1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+
 };

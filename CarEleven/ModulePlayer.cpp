@@ -148,13 +148,14 @@ void ModulePlayer::CreateCar(uint carNum)
 	case 1:
 		car.chassisColour = { 255,0,0,255 }; //Colour for car 1
 		car01 = App->physics->AddVehicle(car);
-		car01->SetPos(0, 12, 10);
+		car01->SetTransform(rot180.M);
+		car01->SetPos(0, 0, 10);
 		break;
 
 	case 2:
 		car.chassisColour = { 0,255,0,255 };	//Colour for car 2
 		car02 = App->physics->AddVehicle(car);
-		car02->SetPos(0, 12, -10);
+		car02->SetPos(0, 0, -10);
 		break;
 
 	default:
@@ -168,14 +169,15 @@ void ModulePlayer::ResetCar(uint carNum)
 	switch (carNum) {
 	case 1:
 		car01->SetTransform(IdentityMatrix.M);
-		car01->SetPos(0, 12, 10);
+		car01->SetTransform(rot180.M);
+		car01->SetPos(0, 0, 10);
 		car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
 		car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
 		break;
 
 	case 2:
 		car02->SetTransform(IdentityMatrix.M);
-		car02->SetPos(0, 12, -10);
+		car02->SetPos(0, 0, -10);
 		car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
 		car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
 		break;
