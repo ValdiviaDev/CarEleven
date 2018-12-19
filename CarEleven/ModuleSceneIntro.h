@@ -25,7 +25,7 @@ public:
 	void RenderPrimitives();
 
 	//Death sensor
-	void CreateDeathSensor();
+	void CreateDeathSensors();
 
 	//Rotating constraint
 	void CreateLevelConstraints();
@@ -43,7 +43,7 @@ public:
 public:
 
 	//Death sensor
-	PhysBody3D* deathSensorPB;
+	PhysBody3D* deathSensorPB[5];
 
 	Cube rotConstraint[4];
 	PhysBody3D* rotConstraintPB[4];

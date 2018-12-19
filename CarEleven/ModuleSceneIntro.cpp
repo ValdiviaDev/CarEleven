@@ -23,7 +23,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 	
 	//Death sensor
-	CreateDeathSensor();
+	CreateDeathSensors();
 
 	//Ring
 	DefineRing();
@@ -61,26 +61,25 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	PhysVehicle3D* car02 = App->player->GetCar(2);
 
 	//Death collider
-	if (body2 == (PhysBody3D*)car01 && body1 == deathSensorPB) {
-		App->audio->PlayFx(App->audio->GetFX().deathSound, 0);
-		App->player->ResetCar(1);
-	}
-
-	if (body2 == (PhysBody3D*)car02 && body1 == deathSensorPB) {
-		App->audio->PlayFx(App->audio->GetFX().deathSound, 0);
-		App->player->ResetCar(2);
-	}
+	for (uint i = 0; i < 5; i++)
+		if (body2 == (PhysBody3D*)car01 && body1 == deathSensorPB[i]) {
+			App->audio->PlayFx(App->audio->GetFX().deathSound, 0);
+			App->player->ResetCar(1);
+		}
+	for (uint i = 0; i < 5; i++)
+		if (body2 == (PhysBody3D*)car02 && body1 == deathSensorPB[i]) {
+			App->audio->PlayFx(App->audio->GetFX().deathSound, 0);
+			App->player->ResetCar(2);
+		}
 
 	//Collision with constraints (play sound)
-	for (uint i = 0; i < 4; i++) {
+	for (uint i = 0; i < 4; i++)
 		if (body2 == (PhysBody3D*)car01 && body1 == rotConstraintPB[i])
 			App->audio->PlayFx(App->audio->GetFX().constraintCollision, 0);
-	}
 
-	for (uint i = 0; i < 4; i++) {
+	for (uint i = 0; i < 4; i++)
 		if (body2 == (PhysBody3D*)car02 && body1 == rotConstraintPB[i])
 			App->audio->PlayFx(App->audio->GetFX().constraintCollision, 0);
-	}
 
 }
 
@@ -100,14 +99,43 @@ void ModuleSceneIntro::RenderPrimitives()
 
 }
 
-void ModuleSceneIntro::CreateDeathSensor()
+void ModuleSceneIntro::CreateDeathSensors()
 {
+	//Initialization just in case
+	for (int i = 0; i < 5; i++)
+		deathSensorPB[i] = nullptr;
+
+	//Down sensor
 	Cube deathSensor(600.0f, 5.0f, 600.0f);
 	deathSensor.SetPos(0.0f, -10.0f, 0.0f);
+	deathSensorPB[0] = App->physics->AddBody(deathSensor, 0.0f);
 
-	deathSensorPB = App->physics->AddBody(deathSensor, 0.0f);
-	deathSensorPB->SetAsSensor(true);
-	deathSensorPB->collision_listeners.add(this);
+	//Left sensor
+	deathSensor.size = vec3(600.0f, 600.0f, 5.0f);
+	deathSensor.SetPos(0.0f, 0.0f, 100.0f);
+	deathSensorPB[1] = App->physics->AddBody(deathSensor, 0.0f);
+
+	//Right sensor
+	deathSensor.size = vec3(600.0f, 600.0f, 5.0f);
+	deathSensor.SetPos(0.0f, 0.0f, -100.0f);
+	deathSensorPB[2] = App->physics->AddBody(deathSensor, 0.0f);
+
+	//Forward sensor
+	deathSensor.size = vec3(5.0f, 600.0f, 600.0f);
+	deathSensor.SetPos(-100.0f, 0.0f, 0.0f);
+	deathSensorPB[3] = App->physics->AddBody(deathSensor, 0.0f);
+
+	//Backward sensor
+	deathSensor.size = vec3(5.0f, 600.0f, 600.0f);
+	deathSensor.SetPos(100.0f, 0.0f, 0.0f);
+	deathSensorPB[4] = App->physics->AddBody(deathSensor, 0.0f);
+
+	//Set as sensor
+	for (int i = 0; i < 5; i++)
+		if (deathSensorPB[i] != nullptr) {
+			deathSensorPB[i]->SetAsSensor(true);
+			deathSensorPB[i]->collision_listeners.add(this);
+		}
 }
 
 void ModuleSceneIntro::CreateLevelConstraints()
