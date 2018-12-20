@@ -23,9 +23,10 @@ PhysVehicle3D::~PhysVehicle3D()
 // ----------------------------------------------------------------------------
 void PhysVehicle3D::Render()
 {
+	//Wheels
 	Cylinder wheel;
 
-	wheel.color = Blue;
+	wheel.color = info.wheelColour;
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -38,6 +39,7 @@ void PhysVehicle3D::Render()
 		wheel.Render();
 	}
 
+	//Chassis
 	Cube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
@@ -50,8 +52,21 @@ void PhysVehicle3D::Render()
 	chassis.transform.M[13] += offset.getY();
 	chassis.transform.M[14] += offset.getZ();
 
-
 	chassis.Render();
+
+	//Shovel
+	Cube shovel(info.chassis_size.x, info.chassis_size.y*0.5, info.chassis_size.z*0.5);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&shovel.transform);
+	btVector3 offsetShov(info.chassis_offset.x, info.chassis_offset.y - 1, info.chassis_offset.z + 3);
+	offsetShov = offsetShov.rotate(q.getAxis(), q.getAngle());
+
+	shovel.color = info.shovelColour;
+
+	shovel.transform.M[12] += offsetShov.getX();
+	shovel.transform.M[13] += offsetShov.getY();
+	shovel.transform.M[14] += offsetShov.getZ();
+
+	shovel.Render();
 }
 
 // ----------------------------------------------------------------------------

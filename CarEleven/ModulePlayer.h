@@ -27,7 +27,7 @@ public:
 	bool CleanUp();
 
 	//Vehicle info
-	VehicleInfo DefineVehickleInfo();
+	VehicleInfo DefineDefaultVehicleInfo();
 
 	//Create car
 	void CreateCar(uint carNum); //Uint is the number of the car

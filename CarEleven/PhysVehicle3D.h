@@ -38,7 +38,14 @@ struct VehicleInfo
 	Wheel* wheels;
 	int num_wheels;
 
+	//Shovel
+	vec3 shovel_size;
+	vec3 shovel_offset;
+
+	//Colours
 	Color chassisColour = { 255,255,255,255 };
+	Color shovelColour = { 255,255,255,255 };
+	Color wheelColour = { 255,255,255,255 };
 };
 
 

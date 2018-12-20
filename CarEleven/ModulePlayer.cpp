@@ -56,12 +56,12 @@ update_status ModulePlayer::Update(float dt)
 }
 
 
-VehicleInfo ModulePlayer::DefineVehickleInfo()
+VehicleInfo ModulePlayer::DefineDefaultVehicleInfo()
 {
-
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
+	//Chassis
 	car.chassis_size.Set(2, 2, 4);
 	car.chassis_offset.Set(0, 1.5, 0);
 	car.mass = 500.0f;
@@ -71,6 +71,10 @@ VehicleInfo ModulePlayer::DefineVehickleInfo()
 	car.maxSuspensionTravelCm = 1000.0f;
 	car.frictionSlip = 50.5;
 	car.maxSuspensionForce = 6000.0f;
+
+	//Shovel
+	car.shovel_size.Set(car.chassis_size.x, car.chassis_size.y * 0.5f, car.chassis_size.z * 0.5f);
+	car.shovel_offset.Set(car.chassis_offset.x, car.chassis_offset.y - 1, car.chassis_offset.z + 3);
 
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
@@ -137,23 +141,26 @@ VehicleInfo ModulePlayer::DefineVehickleInfo()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
+	//Wheel colour
+	car.wheelColour = Blue;
+
 	return car;
 }
 
 void ModulePlayer::CreateCar(uint carNum)
 {
-	VehicleInfo car = DefineVehickleInfo();
+	VehicleInfo car = DefineDefaultVehicleInfo();
 
 	switch (carNum) {
 	case 1:
-		car.chassisColour = { 255,0,0,255 }; //Colour for car 1
+		car.chassisColour = car.shovelColour = Red; //Colour for car 1
 		car01 = App->physics->AddVehicle(car);
 		car01->SetTransform(rot180.M);
 		car01->SetPos(0, 0, 10);
 		break;
 
 	case 2:
-		car.chassisColour = { 0,255,0,255 };	//Colour for car 2
+		car.chassisColour = car.shovelColour = Green;	//Colour for car 2
 		car02 = App->physics->AddVehicle(car);
 		car02->SetPos(0, 0, -10);
 		break;
