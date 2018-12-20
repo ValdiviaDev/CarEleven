@@ -62,15 +62,12 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 	//Death collider
 	for (uint i = 0; i < 5; i++)
-		if (body2 == (PhysBody3D*)car01 && body1 == deathSensorPB[i]) {
-			App->audio->PlayFx(App->audio->GetFX().deathSound, 0);
-			App->player->ResetCar(1);
-		}
+		if (body2 == (PhysBody3D*)car01 && body1 == deathSensorPB[i])
+			App->player->CarDeath(1);
+
 	for (uint i = 0; i < 5; i++)
-		if (body2 == (PhysBody3D*)car02 && body1 == deathSensorPB[i]) {
-			App->audio->PlayFx(App->audio->GetFX().deathSound, 0);
-			App->player->ResetCar(2);
-		}
+		if (body2 == (PhysBody3D*)car02 && body1 == deathSensorPB[i])
+			App->player->CarDeath(2);
 
 	//Collision with constraints (play sound)
 	for (uint i = 0; i < 4; i++)

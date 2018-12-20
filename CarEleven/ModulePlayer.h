@@ -33,12 +33,19 @@ public:
 	void CreateCar(uint carNum); //Uint is the number of the car
 	void ResetCar(uint carNum);
 
+	void CarDeath(uint carNum);
+
 	//Update cars
 	void UpdateCar01();
 	void UpdateCar02();
 
 	//Get car
 	PhysVehicle3D* GetCar(uint carNum); 
+
+public:
+
+	int livesCar01 = 3;
+	int livesCar02 = 3;
 
 private:
 

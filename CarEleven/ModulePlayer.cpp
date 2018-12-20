@@ -195,6 +195,35 @@ void ModulePlayer::ResetCar(uint carNum)
 
 }
 
+void ModulePlayer::CarDeath(uint carNum)
+{
+	App->audio->PlayFx(App->audio->GetFX().deathSound, 0); //Death sound
+
+	switch (carNum) {
+	case 1:
+		livesCar01--;
+		if (App->player->livesCar01 <= 0) {
+			LOG("PLAYER 1 LOSES");
+			App->player->livesCar01 = 3;
+			App->player->livesCar02 = 3;
+		}
+		ResetCar(1);
+		break;
+	case 2:
+		livesCar02--;
+		if (App->player->livesCar02 <= 0) {
+			LOG("PLAYER 2 LOSES");
+			App->player->livesCar01 = 3;
+			App->player->livesCar02 = 3;
+		}
+		ResetCar(2);
+		break;
+	default:
+		break;
+	}
+
+}
+
 void ModulePlayer::UpdateCar01()
 {
 	car01Prop.turn = car01Prop.acceleration = car01Prop.brake = 0.0f;
@@ -218,8 +247,13 @@ void ModulePlayer::UpdateCar01()
 
 	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
+		car01Prop.acceleration = -MAX_ACCELERATION;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT) {
 		car01Prop.brake = BRAKE_POWER;
 	}
+
 
 	car01->ApplyEngineForce(car01Prop.acceleration);
 	car01->Turn(car01Prop.turn);
@@ -251,6 +285,10 @@ void ModulePlayer::UpdateCar02()
 
 	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
 	{
+		car02Prop.acceleration = -MAX_ACCELERATION;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 		car02Prop.brake = BRAKE_POWER;
 	}
 
