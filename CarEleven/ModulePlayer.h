@@ -42,17 +42,18 @@ public:
 	//Get car
 	PhysVehicle3D* GetCar(uint carNum); 
 
-public:
-
-	int livesCar01 = 3;
-	int livesCar02 = 3;
-
 private:
 
 	PhysVehicle3D* car01;
 	PhysVehicle3D* car02;
 	VehicleProperties car01Prop;
 	VehicleProperties car02Prop;
+
+	int livesCar01 = 3;
+	int livesCar02 = 3;
+
+	Color colourCar01 = Color(1.0f, 1.0f, 1.0f);
+	Color colourCar02 = Color(0.0f, 1.0f, 1.0f);
 
 	mat4x4 rot180 = mat4x4(
 		-1.0f, 0.0f, 0.0f, 0.0f,

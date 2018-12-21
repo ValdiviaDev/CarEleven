@@ -153,14 +153,14 @@ void ModulePlayer::CreateCar(uint carNum)
 
 	switch (carNum) {
 	case 1:
-		car.chassisColour = car.shovelColour = Red; //Colour for car 1
+		car.chassisColour = car.shovelColour = colourCar01; //Colour for car 1
 		car01 = App->physics->AddVehicle(car);
 		car01->SetTransform(rot180.M);
 		car01->SetPos(0, 0, 10);
 		break;
 
 	case 2:
-		car.chassisColour = car.shovelColour = Green;	//Colour for car 2
+		car.chassisColour = car.shovelColour = colourCar02;	//Colour for car 2
 		car02 = App->physics->AddVehicle(car);
 		car02->SetPos(0, 0, -10);
 		break;
@@ -221,6 +221,24 @@ void ModulePlayer::CarDeath(uint carNum)
 	default:
 		break;
 	}
+
+	//Change color of shovels to show which player is winning
+	if (livesCar01 > livesCar02) 
+	{
+		car01->info.shovelColour = Green;
+		car02->info.shovelColour = Red;
+	}
+	else if (livesCar01 < livesCar02) 
+	{
+		car01->info.shovelColour = Red;
+		car02->info.shovelColour = Green;
+	}
+	else //Lives are equal
+	{
+		car01->info.shovelColour = colourCar01;
+		car02->info.shovelColour = colourCar02;
+	}
+
 
 }
 
