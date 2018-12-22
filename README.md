@@ -1,4 +1,4 @@
-# CarEleven
+﻿# CarEleven
 
 ## The game
 
@@ -8,8 +8,12 @@ This is a sumo car game, the goal is to take the other car off the arena. Only o
 
 ## Controls and Debug
 
-* Car1: WASD for movement.
-* Car2: YGHJ for movement.
+* Car1: 
+ - WASD for movement.
+ - Left SHIFT for stopping.
+* Car2: 
+ - Direction arrows for movement.
+ - Right SHIFT for stopping
 
 ## Authors 
 

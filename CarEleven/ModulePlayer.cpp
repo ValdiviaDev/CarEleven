@@ -246,29 +246,29 @@ void ModulePlayer::UpdateCar01()
 {
 	car01Prop.turn = car01Prop.acceleration = car01Prop.brake = 0.0f;
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		car01Prop.acceleration = MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		if (car01Prop.turn < TURN_DEGREES)
 			car01Prop.turn += TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		if (car01Prop.turn > -TURN_DEGREES)
 			car01Prop.turn -= TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		car01Prop.acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 		car01Prop.brake = BRAKE_POWER;
 	}
 
@@ -284,29 +284,29 @@ void ModulePlayer::UpdateCar02()
 {
 	car02Prop.turn = car02Prop.acceleration = car02Prop.brake = 0.0f;
 
-	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		car02Prop.acceleration = MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		if (car02Prop.turn < TURN_DEGREES)
 			car02Prop.turn += TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		if (car02Prop.turn > -TURN_DEGREES)
 			car02Prop.turn -= TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		car02Prop.acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT) {
 		car02Prop.brake = BRAKE_POWER;
 	}
 

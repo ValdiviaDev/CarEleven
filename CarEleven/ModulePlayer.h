@@ -53,7 +53,7 @@ private:
 	int livesCar02 = 3;
 
 	Color colourCar01 = Color(1.0f, 1.0f, 1.0f);
-	Color colourCar02 = Color(0.0f, 1.0f, 1.0f);
+	Color colourCar02 = Color(0.2f, 0.2f, 0.2f);
 
 	mat4x4 rot180 = mat4x4(
 		-1.0f, 0.0f, 0.0f, 0.0f,
