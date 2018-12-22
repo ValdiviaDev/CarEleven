@@ -19,7 +19,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(60.0f, 70.0f, -5.0f));
+	App->camera->Move(vec3(75.0f, 60.0f, -5.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 	
 	//Death sensor
@@ -142,10 +142,10 @@ void ModuleSceneIntro::CreateLevelConstraints()
 		rotConstraintPB[i] = nullptr;
 
 	//Level rotating constraitns
-	CreateRotatingConstraint(0, vec3(2.0f, 2.0f, 20.0f), vec3(-30.0f, 2.0f, 30.0f), 5.0f, 100000.0f, { 0,0,255,255 });
-	CreateRotatingConstraint(1, vec3(2.0f, 2.0f, 20.0f), vec3(-30.0f, 2.0f, -30.0f), -5.0f, 100000.0f, { 0,0,255,255 });
-	CreateRotatingConstraint(2, vec3(2.0f, 2.0f, 20.0f), vec3(30.0f, 2.0f, 30.0f), -5.0f, 100000.0f, { 0,0,255,255 });
-	CreateRotatingConstraint(3, vec3(2.0f, 2.0f, 20.0f), vec3(30.0f, 2.0f, -30.0f), 5.0f, 100000.0f, { 0,0,255,255 });
+	CreateRotatingConstraint(0, vec3(2.0f, 3.0f, 25.0f), vec3(-37.5f, 1.7f, 37.5f), 5.0f, 100000.0f, { 0,0,255,255 });
+	CreateRotatingConstraint(1, vec3(2.0f, 3.0f, 25.0f), vec3(-37.5, 1.7f, -37.5f), -5.0f, 100000.0f, { 0,0,255,255 });
+	CreateRotatingConstraint(2, vec3(2.0f, 3.0f, 25.0f), vec3(37.5f, 1.7f, 37.5f), -5.0f, 100000.0f, { 0,0,255,255 });
+	CreateRotatingConstraint(3, vec3(2.0f, 3.0f, 25.0f), vec3(37.5f, 1.7f, -37.5f), 5.0f, 100000.0f, { 0,0,255,255 });
 
 	//Adding the constraints to the collision listeners
 	for (int i = 0; i < 4; i++)
@@ -180,11 +180,14 @@ void ModuleSceneIntro::UpdateRotatingConstraints()
 
 void ModuleSceneIntro::DefineRing()
 {
+	float ring_radius = 47.5f;
+	float ring_height = 80.0f;
+
 	//Ring printing in the form of a cylinder
-	CreateCylinder(40.0f, 80.f, vec3(0.0f, -40.f, 0.0f), { 0,255,255, 255 }, 0.0f, true, false, true, 90.0f, vec3(0.0f, 0.0f, 1.0f));
+	CreateCylinder(ring_radius, ring_height, vec3(0.0f, -ring_height / 2, 0.0f), { 0,255,255, 255 }, 0.0f, true, false, true, 90.0f, vec3(0.0f, 0.0f, 1.0f));
 
 	//Physbody in the form of a cube
-	CreateCube(vec3(80.0f, 80.0f, 80.0f), vec3(0.0f, -40.1f, 0.0f), { 255,0,0,255 });
+	CreateCube(vec3(ring_radius * 2, ring_height, ring_radius * 2), vec3(0.0f, -(ring_height / 2) - 0.1, 0.0f), { 255,0,0,255 });
 }
 
 Cube ModuleSceneIntro::CreateCube(vec3 size, vec3 pos, Color color, float mass, bool draw, bool isPhysicsObject, bool rotate, float angleToRot, vec3  axisToRot)
