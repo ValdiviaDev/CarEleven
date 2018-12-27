@@ -89,12 +89,14 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{
 		isCapsuleRendering = false;
 		capsuleTimer = 0.0f;
+		App->audio->PlayFx(App->audio->GetFX().breakCapsule, 0);
 	}
 
 	if (body2 == (PhysBody3D*)car02 && body1 == capsulePB && isCapsuleRendering)
 	{
 		isCapsuleRendering = false;
 		capsuleTimer = 0.0f;
+		App->audio->PlayFx(App->audio->GetFX().breakCapsule, 0);
 	}
 }
 
@@ -280,7 +282,8 @@ Sphere ModuleSceneIntro::CreateCapsuleBonus(float radius, vec3 pos, Color color)
 void ModuleSceneIntro::CheckForCapsuleToAppear(float dt)
 {
 	capsuleTimer += dt;
-	if (capsuleTimer >= maxCapsuleTime)
+	if (capsuleTimer >= maxCapsuleTime) {
 		isCapsuleRendering = true;
-
+		App->audio->PlayFx(App->audio->GetFX().appearCapsule, 0);
+	}
 }

@@ -166,6 +166,9 @@ void ModuleAudio::ChargeFX()
 	gameSounds.boostSound = LoadFx("Assets/Audio/FX/boost_short.wav");
 	gameSounds.constraintCollision = LoadFx("Assets/Audio/FX/constraint_collision.wav");
 	gameSounds.deathSound = LoadFx("Assets/Audio/FX/death_sound.wav");
+	gameSounds.getBoost = LoadFx("Assets/Audio/FX/get_boost.wav");
+	gameSounds.appearCapsule = LoadFx("Assets/Audio/FX/appear_capsule.wav");
+	gameSounds.breakCapsule = LoadFx("Assets/Audio/FX/break_capsule.wav");
 }
 
 GameSounds ModuleAudio::GetFX()
