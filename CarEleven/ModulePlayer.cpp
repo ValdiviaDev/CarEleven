@@ -204,25 +204,37 @@ void ModulePlayer::CarDeath(uint carNum)
 		livesCar01--;
 		if (App->player->livesCar01 <= 0) {
 			LOG("PLAYER 1 LOSES");
-			App->player->livesCar01 = 3;
-			App->player->livesCar02 = 3;
+			/*App->player->livesCar01 = 3;
+			App->player->livesCar02 = 3;*/
+			car01->SetPos(110.0f, 120.0f, 100.0f);
+			car02->SetPos(100.0f, 120.0f, 100.0f);
+			App->camera->LookAt(vec3(100.0f, 80.0f, 100.0f));
 		}
-		ResetCar(1);
+		else {
+			ResetCar(1);
+		}
 		break;
 	case 2:
 		livesCar02--;
 		if (App->player->livesCar02 <= 0) {
 			LOG("PLAYER 2 LOSES");
-			App->player->livesCar01 = 3;
-			App->player->livesCar02 = 3;
+			/*App->player->livesCar01 = 3;
+			App->player->livesCar02 = 3;*/
+			car01->SetPos(100.0f, 120.0f, 100.0f);
+			car02->SetPos(110.0f, 120.0f, 100.0f);
+			App->camera->LookAt(vec3(100.0f, 80.0f, 100.0f));
 		}
-		ResetCar(2);
+		else {
+			ResetCar(2);
+		}
 		break;
 	default:
 		break;
 	}
 
 	//Change color of shovels to show which player is winning
+	
+
 	if (livesCar01 > livesCar02) 
 	{
 		car01->info.shovelColour = Green;
@@ -238,6 +250,7 @@ void ModulePlayer::CarDeath(uint carNum)
 		car01->info.shovelColour = colourCar01;
 		car02->info.shovelColour = colourCar02;
 	}
+
 
 
 }
