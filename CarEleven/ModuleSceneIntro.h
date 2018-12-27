@@ -43,6 +43,7 @@ public:
 	//Capsule bonus
 	Sphere CreateCapsuleBonus(float radius, vec3 pos, Color color);
 	void CheckForCapsuleToAppear(float dt);
+	vec3 DetermineCapsulePosition();
 
 private:
 
@@ -64,6 +65,6 @@ private:
 
 	//Timer for the bonus sphere to appear
 	float capsuleTimer = 0.0f;
-	float maxCapsuleTime = 5.0f;
+	float maxCapsuleTime = 20.0f;
 
 };

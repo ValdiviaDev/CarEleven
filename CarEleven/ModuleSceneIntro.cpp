@@ -1,3 +1,5 @@
+#include <time.h>
+
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleSceneIntro.h"
@@ -283,7 +285,41 @@ void ModuleSceneIntro::CheckForCapsuleToAppear(float dt)
 {
 	capsuleTimer += dt;
 	if (capsuleTimer >= maxCapsuleTime) {
+		
+		vec3 capsulePos = vec3(DetermineCapsulePosition());
+		capsulePB->SetPos(capsulePos.x, capsulePos.y, capsulePos.z);
+		capsulePB->GetTransform(capsule.transform.M);
+
 		isCapsuleRendering = true;
 		App->audio->PlayFx(App->audio->GetFX().appearCapsule, 0);
+
+	}
+}
+
+//Put capsule sphere in one of 5 places
+vec3 ModuleSceneIntro::DetermineCapsulePosition()
+{
+	srand(time(NULL));
+	int rngPos = rand() % 5 + 1;
+
+	switch (rngPos) {
+	case 1:
+		return vec3(0.0f, 2.0f, 0.0f);
+		break;
+	case 2:
+		return vec3(27.0f, 2.0f, 0.0f);
+		break;
+	case 3:
+		return vec3(-27.0f, 2.0f, 0.0f);
+		break;
+	case 4:
+		return vec3(0.0f, 2.0f, 27.0f);
+		break;
+	case 5:
+		return vec3(0.0f, 2.0f, -27.0f);
+		break;
+	default:
+		return vec3(0.0f, 2.0f, 0.0f);
+		break;
 	}
 }
