@@ -30,7 +30,7 @@ public:
 	//Rotating constraint
 	void CreateLevelConstraints();
 	void UpdateRotatingConstraints();
-	void CreateRotatingConstraint(int index, vec3 size, vec3 pos, float velocity = 3.0f, float mass = 100000.0f, Color color = { 0,255,0,255 });
+	//void CreateRotatingConstraint(int index, vec3 size, vec3 pos, float velocity = 3.0f, float mass = 100000.0f, Color color = { 0,255,0,255 });
 
 	//Ring
 	void DefineRing();
