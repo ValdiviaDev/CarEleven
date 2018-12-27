@@ -40,7 +40,11 @@ public:
 	Cylinder CreateCylinder(float radius, float height, vec3 pos, Color color, float mass = 0.0f, bool draw = true, bool isPhysicsObject = true, bool rotate = false, float angleToRot = 0.0f, vec3  axisToRot = (0.0f, 1.0f, 0.0f));
 	Sphere CreateSphere(float radius, vec3 pos, Color color, float mass = 0.0f, bool draw = true, bool isPhysicsObject = true, bool rotate = false, float angleToRot = 0.0f, vec3  axisToRot = (0.0f, 1.0f, 0.0f));
 
-public:
+	//Capsule bonus
+	Sphere CreateCapsuleBonus(float radius, vec3 pos, Color color);
+	void CheckForCapsuleToAppear(float dt);
+
+private:
 
 	//Death sensor
 	PhysBody3D* deathSensorPB[5];
@@ -52,5 +56,14 @@ public:
 	p2List<Cube> cubesToRender;
 	p2List<Cylinder> cylindersToRender;
 	p2List<Sphere> spheresToRender;
+
+	//Bonus sphere that appears every one in a while
+	Sphere capsule;
+	PhysBody3D* capsulePB = nullptr;
+	bool isCapsuleRendering = false;
+
+	//Timer for the bonus sphere to appear
+	float capsuleTimer = 0.0f;
+	float maxCapsuleTime = 20.0f;
 
 };

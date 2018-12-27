@@ -33,6 +33,7 @@ bool ModuleSceneIntro::Start()
 
 	App->audio->PlayMusic("Assets/Audio/Music/level_theme.ogg");
 
+	capsule = CreateCapsuleBonus(2.0f, vec3(0, 2.0f, 0), { 255,255,0 });
 	return ret;
 }
 
@@ -51,6 +52,11 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	//Render everything on scene
 	RenderPrimitives();
+
+	if (isCapsuleRendering)
+		capsule.Render();
+	else if (!isCapsuleRendering)
+		CheckForCapsuleToAppear(dt);
 
 	return UPDATE_CONTINUE;
 }
@@ -78,6 +84,18 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (body2 == (PhysBody3D*)car02 && body1 == rotConstraintPB[i])
 			App->audio->PlayFx(App->audio->GetFX().constraintCollision, 0);
 
+
+	if (body2 == (PhysBody3D*)car01 && body1 == capsulePB && isCapsuleRendering)
+	{
+		isCapsuleRendering = false;
+		capsuleTimer = 0.0f;
+	}
+
+	if (body2 == (PhysBody3D*)car02 && body1 == capsulePB && isCapsuleRendering)
+	{
+		isCapsuleRendering = false;
+		capsuleTimer = 0.0f;
+	}
 }
 
 void ModuleSceneIntro::RenderPrimitives()
@@ -244,3 +262,23 @@ Sphere ModuleSceneIntro::CreateSphere(float radius, vec3 pos, Color color, float
 	return sphere;
 }
 
+Sphere ModuleSceneIntro::CreateCapsuleBonus(float radius, vec3 pos, Color color)
+{
+	Sphere sphere(radius);
+	sphere.SetPos(pos.x, pos.y, pos.z);
+	sphere.color = color;
+
+	capsulePB = App->physics->AddBody(sphere, 0.0f);
+	capsulePB->SetAsSensor(true);
+	capsulePB->collision_listeners.add(this);
+
+	return sphere;
+}
+
+void ModuleSceneIntro::CheckForCapsuleToAppear(float dt)
+{
+	capsuleTimer += dt;
+	if (capsuleTimer >= maxCapsuleTime)
+		isCapsuleRendering = true;
+
+}
