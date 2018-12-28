@@ -47,6 +47,12 @@ update_status ModulePlayer::Update(float dt)
 		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
+		car02->ApplyEngineForce(100000000.0f);
+		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
+	}
+
 	//Title
     char title[80];
     sprintf_s(title, "%.1f Km/h, %.1f Km/h", car01->GetKmh(), car02->GetKmh());
@@ -206,12 +212,24 @@ void ModulePlayer::CarDeath(uint carNum)
 			LOG("PLAYER 1 LOSES");
 			/*App->player->livesCar01 = 3;
 			App->player->livesCar02 = 3;*/
-			car01->SetPos(110.0f, 120.0f, 100.0f);
-			car02->SetPos(100.0f, 120.0f, 100.0f);
-			App->camera->LookAt(vec3(100.0f, 80.0f, 100.0f));
+			inpodium = true;
+			car01->SetPos(200.0f, 204.0f, 200.0f);
+			car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+			car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+			//car01->SetTransform(IdentityMatrix.M);
+			//car01->SetTransform(rot180.M);
+
+			car02->SetPos(220.0f, 202.0f, 200.0f);
+			car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+			//car02->SetTransform(IdentityMatrix.M);
+			//car02->SetTransform(rot180.M);
+			car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+			
+			App->camera->LookAt(vec3(200.0f, 220.0f, 180.0f));
 		}
 		else {
 			ResetCar(1);
+			//inpodium = false;
 		}
 		break;
 	case 2:
@@ -220,9 +238,22 @@ void ModulePlayer::CarDeath(uint carNum)
 			LOG("PLAYER 2 LOSES");
 			/*App->player->livesCar01 = 3;
 			App->player->livesCar02 = 3;*/
-			car01->SetPos(100.0f, 120.0f, 100.0f);
-			car02->SetPos(110.0f, 120.0f, 100.0f);
-			App->camera->LookAt(vec3(100.0f, 80.0f, 100.0f));
+			inpodium = true;
+			
+			car01->SetPos(220.0f, 202.0f, 200.0f);
+			car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+			car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+			car01->SetTransform(IdentityMatrix.M);
+			car01->SetTransform(rot180.M);
+			car02->SetPos(200.0f, 204.0f, 200.0f);
+			car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+			car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+			car02->SetTransform(IdentityMatrix.M);
+			car02->SetTransform(rot180.M);
+		
+
+
+			App->camera->LookAt(vec3(200.0f, 220.0f, 180.0f));
 		}
 		else {
 			ResetCar(2);
@@ -259,29 +290,29 @@ void ModulePlayer::UpdateCar01()
 {
 	car01Prop.turn = car01Prop.acceleration = car01Prop.brake = 0.0f;
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && inpodium == false)
 	{
 		car01Prop.acceleration = MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && inpodium == false)
 	{
 		if (car01Prop.turn < TURN_DEGREES)
 			car01Prop.turn += TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && inpodium == false)
 	{
 		if (car01Prop.turn > -TURN_DEGREES)
 			car01Prop.turn -= TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && inpodium == false)
 	{
 		car01Prop.acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && inpodium == false) {
 		car01Prop.brake = BRAKE_POWER;
 	}
 
@@ -297,29 +328,29 @@ void ModulePlayer::UpdateCar02()
 {
 	car02Prop.turn = car02Prop.acceleration = car02Prop.brake = 0.0f;
 
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP ) == KEY_REPEAT && inpodium == false)
 	{
 		car02Prop.acceleration = MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && inpodium == false)
 	{
 		if (car02Prop.turn < TURN_DEGREES)
 			car02Prop.turn += TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && inpodium == false)
 	{
 		if (car02Prop.turn > -TURN_DEGREES)
 			car02Prop.turn -= TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && inpodium == false)
 	{
 		car02Prop.acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT && inpodium == false) {
 		car02Prop.brake = BRAKE_POWER;
 	}
 

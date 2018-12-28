@@ -51,6 +51,7 @@ private:
 
 	int livesCar01 = 3;
 	int livesCar02 = 3;
+	bool inpodium = false;
 
 	Color colourCar01 = Color(1.0f, 1.0f, 1.0f);
 	Color colourCar02 = Color(0.2f, 0.2f, 0.2f);

@@ -210,8 +210,10 @@ void ModuleSceneIntro::DefineRing()
 
 	//Physbody in the form of a cube
 	CreateCube(vec3(ring_radius * 2, ring_height, ring_radius * 2), vec3(0.0f, -(ring_height / 2) - 0.1, 0.0f), { 255,0,0,255 });
-	CreateCube(vec3(4.0f, 4.0f, 2.0f), vec3(100.0f, 100.0f, 100.0f), { 0,0,255,255 });
-	CreateCube(vec3(4.0f, 4.0f, 2.0f), vec3(110.0f, 100.0f, 100.0f), { 0,0,255,255 });
+	CreateCube(vec3(15.0f, 4.0f, 15.0f), vec3(200.0f, 200.0f, 200.0f), { 0,0,255,255 });
+	CreateCube(vec3(15.0f, 2.0f, 15.0f), vec3(220.0f, 200.0f, 200.0f), { 0,0,255,255 });
+	CreateCube(vec3(30.0f, 1.0f, 30.0f), vec3(195.0f, 195.0f, 195.0f), { 255,255,255,255 });
+	
 }
 
 Cube ModuleSceneIntro::CreateCube(vec3 size, vec3 pos, Color color, float mass, bool draw, bool isPhysicsObject, bool rotate, float angleToRot, vec3  axisToRot)
