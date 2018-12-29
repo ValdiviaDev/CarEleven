@@ -386,8 +386,9 @@ void ModulePlayer::SetEndPodium(int carLost)
 	App->scene_intro->isCapsuleRendering = false;
 	App->scene_intro->capsuleTimer = 0.0f;
 
-	//Play the ending theme
+	//Play the ending theme and GAME finished sound
 	App->audio->PlayMusic("Assets/Audio/Music/ending_theme.ogg", 1.0F);
+	App->audio->PlayFx(App->audio->GetFX().endGameSound, 0);
 
 }
 
@@ -412,6 +413,7 @@ void ModulePlayer::ResetGame()
 
 	inpodium = false;
 
-	//Play the level theme
+	//Play the level theme and restart FX
+	App->audio->PlayFx(App->audio->GetFX().restartSound, 0);
 	App->audio->PlayMusic("Assets/Audio/Music/level_theme.ogg", 1.0F);
 }

@@ -14,6 +14,8 @@ struct GameSounds {
 	FX getBoost;
 	FX appearCapsule;
 	FX breakCapsule;
+	FX restartSound;
+	FX endGameSound;
 };
 
 class ModuleAudio : public Module

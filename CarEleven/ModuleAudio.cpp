@@ -169,6 +169,8 @@ void ModuleAudio::ChargeFX()
 	gameSounds.getBoost = LoadFx("Assets/Audio/FX/get_boost.wav");
 	gameSounds.appearCapsule = LoadFx("Assets/Audio/FX/appear_capsule.wav");
 	gameSounds.breakCapsule = LoadFx("Assets/Audio/FX/break_capsule.wav");
+	gameSounds.restartSound = LoadFx("Assets/Audio/FX/restart_sound.wav");
+	gameSounds.endGameSound = LoadFx("Assets/Audio/FX/end_game_sound.wav");
 }
 
 GameSounds ModuleAudio::GetFX()
