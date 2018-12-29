@@ -41,13 +41,13 @@ update_status ModulePlayer::Update(float dt)
 	UpdateCar02();
 
 	//Boost
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && inpodium == false) {
 		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
 		car01->ApplyEngineForce(100000000.0f);
 		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN && inpodium == false) {
 		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
 		car02->ApplyEngineForce(100000000.0f);
 		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
@@ -213,19 +213,22 @@ void ModulePlayer::CarDeath(uint carNum)
 			/*App->player->livesCar01 = 3;
 			App->player->livesCar02 = 3;*/
 			inpodium = true;
-			car01->SetPos(200.0f, 204.0f, 200.0f);
+			car01->SetPos(200.0f, 215.0f, 210.0f);
 			car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
 			car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
 			//car01->SetTransform(IdentityMatrix.M);
 			//car01->SetTransform(rot180.M);
 
-			car02->SetPos(220.0f, 202.0f, 200.0f);
+			car02->SetPos(200.0f, 207.0f, 220.0f);
 			car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
 			//car02->SetTransform(IdentityMatrix.M);
 			//car02->SetTransform(rot180.M);
 			car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
 			
-			App->camera->LookAt(vec3(200.0f, 220.0f, 180.0f));
+			App->camera->Move(vec3(190.0f, 200.0f, 209.0f));
+			App->camera->LookAt(vec3(157.0f, 217.0f, 209.0f));
+			App->camera->GetViewMatrix();
+		
 		}
 		else {
 			ResetCar(1);
@@ -240,20 +243,18 @@ void ModulePlayer::CarDeath(uint carNum)
 			App->player->livesCar02 = 3;*/
 			inpodium = true;
 			
-			car01->SetPos(220.0f, 202.0f, 200.0f);
+			car01->SetPos(200.0f, 207.0f, 220.0f);
 			car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
 			car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			car01->SetTransform(IdentityMatrix.M);
-			car01->SetTransform(rot180.M);
-			car02->SetPos(200.0f, 204.0f, 200.0f);
+		
+			car02->SetPos(200.0f, 215.0f, 200.0f);
 			car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
 			car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			car02->SetTransform(IdentityMatrix.M);
-			car02->SetTransform(rot180.M);
+			
 		
 
-
-			App->camera->LookAt(vec3(200.0f, 220.0f, 180.0f));
+			App->camera->Move(vec3(190.0f, 200.0f, 209.0f));
+			App->camera->LookAt(vec3(157.0f, 217.0f, 209.0f));
 		}
 		else {
 			ResetCar(2);

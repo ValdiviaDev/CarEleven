@@ -50,6 +50,7 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
+	
 	UpdateRotatingConstraints();
 
 	//Render everything on scene
@@ -210,9 +211,9 @@ void ModuleSceneIntro::DefineRing()
 
 	//Physbody in the form of a cube
 	CreateCube(vec3(ring_radius * 2, ring_height, ring_radius * 2), vec3(0.0f, -(ring_height / 2) - 0.1, 0.0f), { 255,0,0,255 });
-	CreateCube(vec3(15.0f, 4.0f, 15.0f), vec3(200.0f, 200.0f, 200.0f), { 0,0,255,255 });
-	CreateCube(vec3(15.0f, 2.0f, 15.0f), vec3(220.0f, 200.0f, 200.0f), { 0,0,255,255 });
-	CreateCube(vec3(30.0f, 1.0f, 30.0f), vec3(195.0f, 195.0f, 195.0f), { 255,255,255,255 });
+	CreateCube(vec3(15.0f, 17.0f, 15.0f), vec3(200.0f, 203.0f, 200.0f), { 0,0,255,255 });
+	CreateCube(vec3(15.0f, 10.0f, 15.0f), vec3(200.0f, 200.0f, 220.0f), { 0,0,255,255 });
+	//CreateCube(vec3(30.0f, 1.0f, 30.0f), vec3(195.0f, 195.0f, 195.0f), { 255,255,255,255 });
 	
 }
 

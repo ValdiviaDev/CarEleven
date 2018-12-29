@@ -60,7 +60,8 @@ update_status ModuleCamera3D::Update(float dt)
 	Position += newPos;
 	Reference += newPos;
 	 
-	LOG("%f, %f, %f",X,Y,Z);
+	LOG("%f, %f, %f",Position.x,Position.y,Position.z);
+	
 	// Mouse motion ----------------
 
 	if(App->input->GetMouseButton(SDL_BUTTON_RIGHT) == KEY_REPEAT)
