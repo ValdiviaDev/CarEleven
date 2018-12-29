@@ -45,6 +45,9 @@ public:
 	//Get is in podium
 	bool IsGameFinished();
 
+	//Set the ending game podium / end screen
+	void SetEndPodium(int carLost);
+
 	//Reset game
 	void ResetGame();
 

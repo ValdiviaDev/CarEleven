@@ -40,19 +40,6 @@ update_status ModulePlayer::Update(float dt)
 	UpdateCar01();
 	UpdateCar02();
 
-	//Boost
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && inpodium == false) {
-		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
-		car01->ApplyEngineForce(100000000.0f);
-		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN && inpodium == false) {
-		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
-		car02->ApplyEngineForce(100000000.0f);
-		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
-	}
-
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN &&inpodium == true)
 		ResetGame();
 
@@ -211,67 +198,21 @@ void ModulePlayer::CarDeath(uint carNum)
 	switch (carNum) {
 	case 1:
 		livesCar01--;
-		if (App->player->livesCar01 <= 0) {
+		if (App->player->livesCar01 == 0) {
 			LOG("PLAYER 1 LOSES");
-			/*App->player->livesCar01 = 3;
-			App->player->livesCar02 = 3;*/
-			inpodium = true;
-			car01->SetPos(200.0f, 215.0f, 210.0f);
-			car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			//car01->SetTransform(IdentityMatrix.M);
-			//car01->SetTransform(rot180.M);
-
-			car02->SetPos(200.0f, 207.0f, 220.0f);
-			car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			//car02->SetTransform(IdentityMatrix.M);
-			//car02->SetTransform(rot180.M);
-			car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			
-			App->camera->Move(vec3(190.0f, 200.0f, 209.0f));
-			App->camera->LookAt(vec3(157.0f, 217.0f, 209.0f));
-			App->camera->GetViewMatrix();
-
-			//Reset the capsule
-			App->scene_intro->isCapsuleRendering = false;
-			App->scene_intro->capsuleTimer = 0.0f;
-			
+			SetEndPodium(1);
 		}
-		else {
+		else if(App->player->livesCar01 > 0)
 			ResetCar(1);
-		}
-
-		
 		break;
 	case 2:
 		livesCar02--;
-		if (App->player->livesCar02 <= 0) {
+		if (App->player->livesCar02 == 0) {
 			LOG("PLAYER 2 LOSES");
-			/*App->player->livesCar01 = 3;
-			App->player->livesCar02 = 3;*/
-			inpodium = true;
-			
-			car01->SetPos(200.0f, 207.0f, 220.0f);
-			car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
-		
-			car02->SetPos(200.0f, 215.0f, 200.0f);
-			car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
-		
-
-			App->camera->Move(vec3(190.0f, 200.0f, 209.0f));
-			App->camera->LookAt(vec3(157.0f, 217.0f, 209.0f));
-
-
-			//Reset the capsule
-			App->scene_intro->isCapsuleRendering = false;
-			App->scene_intro->capsuleTimer = 0.0f;
+			SetEndPodium(2);
 		}
-		else {
+		else if(App->player->livesCar02 > 0)
 			ResetCar(2);
-		}
-	
 		break;
 	default:
 		break;
@@ -302,36 +243,42 @@ void ModulePlayer::UpdateCar01()
 {
 	car01Prop.turn = car01Prop.acceleration = car01Prop.brake = 0.0f;
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && inpodium == false)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && !inpodium)
 	{
 		car01Prop.acceleration = MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && inpodium == false)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !inpodium)
 	{
 		if (car01Prop.turn < TURN_DEGREES)
 			car01Prop.turn += TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && inpodium == false)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !inpodium)
 	{
 		if (car01Prop.turn > -TURN_DEGREES)
 			car01Prop.turn -= TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && inpodium == false)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !inpodium)
 	{
 		car01Prop.acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && inpodium == false) {
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT && !inpodium) {
 		car01Prop.brake = BRAKE_POWER;
 	}
-
 
 	car01->ApplyEngineForce(car01Prop.acceleration);
 	car01->Turn(car01Prop.turn);
 	car01->Brake(car01Prop.brake);
+
+		//Boost
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !inpodium) {
+		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
+		car01->ApplyEngineForce(100000000.0f);
+		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
+	}
 
 	car01->Render();
 }
@@ -340,29 +287,29 @@ void ModulePlayer::UpdateCar02()
 {
 	car02Prop.turn = car02Prop.acceleration = car02Prop.brake = 0.0f;
 
-	if (App->input->GetKey(SDL_SCANCODE_UP ) == KEY_REPEAT && inpodium == false)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT && !inpodium)
 	{
 		car02Prop.acceleration = MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && inpodium == false)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT && !inpodium)
 	{
 		if (car02Prop.turn < TURN_DEGREES)
 			car02Prop.turn += TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && inpodium == false)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && !inpodium)
 	{
 		if (car02Prop.turn > -TURN_DEGREES)
 			car02Prop.turn -= TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && !inpodium)
 	{
 		car02Prop.acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT && !inpodium) {
 		car02Prop.brake = BRAKE_POWER;
 	}
 
@@ -370,6 +317,13 @@ void ModulePlayer::UpdateCar02()
 	car02->Turn(car02Prop.turn);
 	car02->Brake(car02Prop.brake);
 		
+	//Boost
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN && !inpodium) {
+		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
+		car02->ApplyEngineForce(100000000.0f);
+		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
+	}
+
 	car02->Render();
 }
 
@@ -392,6 +346,46 @@ PhysVehicle3D * ModulePlayer::GetCar(uint carNum)
 bool ModulePlayer::IsGameFinished()
 {
 	return inpodium;
+}
+
+void ModulePlayer::SetEndPodium(int carLost)
+{
+	inpodium = true;
+
+	//Stop the cars from moving
+	car01->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+	car01->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+	car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
+	car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
+
+	car01->SetTransform(IdentityMatrix.M);
+	car02->SetTransform(IdentityMatrix.M);
+	//Set cars' positions
+	switch (carLost) 
+	{
+	case 1:
+		car01->SetPos(200.0f, 207.0f, 220.0f);
+		car02->SetPos(200.0f, 215.0f, 200.0f);
+		break;
+	case 2:
+		car01->SetPos(200.0f, 215.0f, 200.0f);
+		car02->SetPos(200.0f, 207.0f, 220.0f);
+		break;
+	default:
+		car01->SetPos(200.0f, 207.0f, 220.0f);
+		car02->SetPos(200.0f, 215.0f, 200.0f);
+		break;
+	}
+
+	//Camera
+	App->camera->Move(vec3(190.0f, 200.0f, 209.0f));
+	App->camera->LookAt(vec3(157.0f, 217.0f, 209.0f));
+	//App->camera->GetViewMatrix();
+
+	//Reset the capsule
+	App->scene_intro->isCapsuleRendering = false;
+	App->scene_intro->capsuleTimer = 0.0f;
+
 }
 
 void ModulePlayer::ResetGame()
