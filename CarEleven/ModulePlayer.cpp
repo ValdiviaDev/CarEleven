@@ -53,6 +53,20 @@ update_status ModulePlayer::Update(float dt)
 		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN &&inpodium==true) {
+		LOG("hi");
+		ResetCar(1);
+		ResetCar(2);
+		App->player->livesCar01 = 3;
+		App->player->livesCar02 = 3;
+		App->camera->Position.x = 0;
+		App->camera->Position.y = 0;
+		App->camera->Position.z = 0;
+		App->camera->Move(vec3(75.0f, 60.0f, -5.0f));
+		App->camera->LookAt(vec3(0, 0, 0));
+		inpodium = false;
+	}
+
 	//Title
     char title[80];
     sprintf_s(title, "%.1f Km/h, %.1f Km/h", car01->GetKmh(), car02->GetKmh());
@@ -228,12 +242,13 @@ void ModulePlayer::CarDeath(uint carNum)
 			App->camera->Move(vec3(190.0f, 200.0f, 209.0f));
 			App->camera->LookAt(vec3(157.0f, 217.0f, 209.0f));
 			App->camera->GetViewMatrix();
-		
+			
 		}
 		else {
 			ResetCar(1);
-			//inpodium = false;
 		}
+
+		
 		break;
 	case 2:
 		livesCar02--;
@@ -259,6 +274,9 @@ void ModulePlayer::CarDeath(uint carNum)
 		else {
 			ResetCar(2);
 		}
+	
+		
+	
 		break;
 	default:
 		break;
@@ -346,12 +364,12 @@ void ModulePlayer::UpdateCar02()
 			car02Prop.turn -= TURN_DEGREES;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && inpodium == false)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		car02Prop.acceleration = -MAX_ACCELERATION;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT && inpodium == false) {
+	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT) {
 		car02Prop.brake = BRAKE_POWER;
 	}
 
