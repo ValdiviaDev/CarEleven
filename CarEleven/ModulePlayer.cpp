@@ -40,7 +40,7 @@ update_status ModulePlayer::Update(float dt)
 	UpdateCar01();
 	UpdateCar02();
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN &&inpodium == true)
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && inpodium == true)
 		ResetGame();
 
 	//Title
@@ -386,6 +386,9 @@ void ModulePlayer::SetEndPodium(int carLost)
 	App->scene_intro->isCapsuleRendering = false;
 	App->scene_intro->capsuleTimer = 0.0f;
 
+	//Play the ending theme
+	App->audio->PlayMusic("Assets/Audio/Music/ending_theme.ogg", 1.0F);
+
 }
 
 void ModulePlayer::ResetGame()
@@ -408,4 +411,7 @@ void ModulePlayer::ResetGame()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	inpodium = false;
+
+	//Play the level theme
+	App->audio->PlayMusic("Assets/Audio/Music/level_theme.ogg", 1.0F);
 }
