@@ -53,19 +53,8 @@ update_status ModulePlayer::Update(float dt)
 		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN &&inpodium==true) {
-		LOG("hi");
-		ResetCar(1);
-		ResetCar(2);
-		App->player->livesCar01 = 3;
-		App->player->livesCar02 = 3;
-		App->camera->Position.x = 0;
-		App->camera->Position.y = 0;
-		App->camera->Position.z = 0;
-		App->camera->Move(vec3(75.0f, 60.0f, -5.0f));
-		App->camera->LookAt(vec3(0, 0, 0));
-		inpodium = false;
-	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN &&inpodium == true)
+		ResetGame();
 
 	//Title
     char title[80];
@@ -242,6 +231,10 @@ void ModulePlayer::CarDeath(uint carNum)
 			App->camera->Move(vec3(190.0f, 200.0f, 209.0f));
 			App->camera->LookAt(vec3(157.0f, 217.0f, 209.0f));
 			App->camera->GetViewMatrix();
+
+			//Reset the capsule
+			App->scene_intro->isCapsuleRendering = false;
+			App->scene_intro->capsuleTimer = 0.0f;
 			
 		}
 		else {
@@ -265,17 +258,19 @@ void ModulePlayer::CarDeath(uint carNum)
 			car02->SetPos(200.0f, 215.0f, 200.0f);
 			car02->GetBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 0.0f));
 			car02->GetBody()->setAngularVelocity(btVector3(0.0f, 0.0f, 0.0f));
-			
 		
 
 			App->camera->Move(vec3(190.0f, 200.0f, 209.0f));
 			App->camera->LookAt(vec3(157.0f, 217.0f, 209.0f));
+
+
+			//Reset the capsule
+			App->scene_intro->isCapsuleRendering = false;
+			App->scene_intro->capsuleTimer = 0.0f;
 		}
 		else {
 			ResetCar(2);
 		}
-	
-		
 	
 		break;
 	default:
@@ -283,8 +278,6 @@ void ModulePlayer::CarDeath(uint carNum)
 	}
 
 	//Change color of shovels to show which player is winning
-	
-
 	if (livesCar01 > livesCar02) 
 	{
 		car01->info.shovelColour = Green;
@@ -394,4 +387,31 @@ PhysVehicle3D * ModulePlayer::GetCar(uint carNum)
 		break;
 	}
 	return nullptr;
+}
+
+bool ModulePlayer::IsGameFinished()
+{
+	return inpodium;
+}
+
+void ModulePlayer::ResetGame()
+{
+	LOG("Reseting Game");
+	//Cars
+	ResetCar(1);
+	ResetCar(2);
+	livesCar01 = 3;
+	livesCar02 = 3;
+	//Return shovel colours to its original state
+	car01->info.shovelColour = colourCar01;
+	car02->info.shovelColour = colourCar02;
+
+	//Camera
+	App->camera->Position.x = 0;
+	App->camera->Position.y = 0;
+	App->camera->Position.z = 0;
+	App->camera->Move(vec3(75.0f, 60.0f, -5.0f));
+	App->camera->LookAt(vec3(0, 0, 0));
+
+	inpodium = false;
 }

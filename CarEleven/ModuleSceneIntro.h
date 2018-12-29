@@ -61,10 +61,13 @@ private:
 	//Bonus sphere that appears every one in a while
 	Sphere capsule;
 	PhysBody3D* capsulePB = nullptr;
-	bool isCapsuleRendering = false;
 
 	//Timer for the bonus sphere to appear
-	float capsuleTimer = 0.0f;
 	float maxCapsuleTime = 20.0f;
+
+public:
+	//Bonus sphere
+	bool isCapsuleRendering = false;
+	float capsuleTimer = 0.0f;
 
 };

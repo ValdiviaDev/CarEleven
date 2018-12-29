@@ -58,7 +58,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	if (isCapsuleRendering)
 		capsule.Render();
-	else if (!isCapsuleRendering)
+
+	else if (!isCapsuleRendering && !App->player->IsGameFinished())
 		CheckForCapsuleToAppear(dt);
 
 	return UPDATE_CONTINUE;

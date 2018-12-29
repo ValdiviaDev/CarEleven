@@ -42,6 +42,12 @@ public:
 	//Get car
 	PhysVehicle3D* GetCar(uint carNum); 
 
+	//Get is in podium
+	bool IsGameFinished();
+
+	//Reset game
+	void ResetGame();
+
 private:
 
 	PhysVehicle3D* car01;
