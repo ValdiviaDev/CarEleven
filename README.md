@@ -6,14 +6,29 @@ Thank you for downloading!
 
 This is a sumo car game, the goal is to take the other car off the arena. Only one can win!
 
-## Controls and Debug
+## Gameplay
+
+The players' cars have a shovel on the front to make easier the task of tossing off the other player. Also, after some time, the players will get
+the ability to boost to make throwing the opponent off the stage easier. When a player gets the boost it will be indicated with a sound 
+and the cars' wheels will turn green. Each player can boost three times before they run out of it, but they can also
+obtain one aditional boost if they break a capsule that will appear in the arena every once in a while.
+
+Be careful with the rotating blades on the sides of the arena or they will toss you off.
+
+Each player has three lives. The loser will be the one that loses their lives first. During the game the player that's winning will have
+their shovel painted green while the one thats losing will have it painted red.
+
+## Controls
 
 * Car1: 
  - WASD for movement.
  - Left SHIFT for stopping.
+ - SPACE for boosting 
+
 * Car2: 
  - Direction arrows for movement.
  - Right SHIFT for stopping
+ - L for boosting
 
 ## Authors 
 
@@ -23,13 +38,22 @@ This is a sumo car game, the goal is to take the other car off the arena. Only o
  
 ## Credits (insert credits)
 
+* Music tracks:
+ - City Escape (Classic ver.) - Sonic Generations (2011)
+ - 1st Place Goal + Results - Mario Kart: Double Dash!! (2003)
 
-
+* Sound effects from:
+ - Sonic the Hedgehog 2 (1992)
+ - Super Smash Bros. Melee (2001)
+ - Super Smash Bros. for Nintendo 3DS and Wii U (2014)
+ - Sonic Mania (2017)
 
 ## Tools used
-* c++ using Visual Studio 2017
+
+* C++ using Visual Studio 2017
 * SDL Library
-* OPENGL Library
+* OpenGL Library
+* Bullet Physics
 
 ## License
 
@@ -57,4 +81,4 @@ SOFTWARE.
 
 ## Github repository link
 
-https://github.com/ValdiviaDev/Firefighter-Pinball
+https://github.com/ValdiviaDev/CarEleven
