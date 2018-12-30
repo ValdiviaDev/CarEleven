@@ -140,7 +140,7 @@ VehicleInfo ModulePlayer::DefineDefaultVehicleInfo()
 	car.wheels[3].steering = false;
 
 	//Wheel colour
-	car.wheelColour = Blue;
+	car.wheelColour = Green;
 
 	return car;
 }
@@ -419,11 +419,12 @@ void ModulePlayer::boostControl1(float dt)
 
 	if (boostcont01 == 0) {
 		boostTimer1 += dt;
+		car01->info.wheelColour = Blue;
 	}
 	if (boostTimer1 >= maxBoostTime1 && !inpodium) {
 		boostcont01 = 3;
-
-
+		boostTimer1 = 0.0f;
+		car01->info.wheelColour = Green;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !inpodium && boostcont01 > 0) {
 		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
@@ -439,11 +440,14 @@ void ModulePlayer::boostControl2(float dt)
 {
 	if (boostcont02 == 0) {
 		boostTimer2 += dt;
+		car02->info.wheelColour = Blue;
 	}
 	
 
 	if (boostTimer2 >= maxBoostTime2) {
 		boostcont02 = 3;
+		boostTimer2 = 0.0f;
+		
 
 	}
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN && !inpodium && boostcont02 > 0) {

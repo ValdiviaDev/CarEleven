@@ -62,6 +62,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	else if (!isCapsuleRendering && !App->player->IsGameFinished())
 		CheckForCapsuleToAppear(dt);
 
+
 	return UPDATE_CONTINUE;
 }
 
