@@ -36,8 +36,8 @@ public:
 	void CarDeath(uint carNum);
 
 	//Update cars
-	void UpdateCar01();
-	void UpdateCar02();
+	void UpdateCar01(float dt);
+	void UpdateCar02(float dt);
 
 	//Get car
 	PhysVehicle3D* GetCar(uint carNum); 
@@ -51,6 +51,12 @@ public:
 	//Reset game
 	void ResetGame();
 
+	//Boost
+
+	void boostControl1(float dt);
+	void boostControl2(float dt);
+
+
 private:
 
 	PhysVehicle3D* car01;
@@ -61,6 +67,12 @@ private:
 	int livesCar01 = 3;
 	int livesCar02 = 3;
 	bool inpodium = false;
+	int boostcont01 = 3;
+	int boostcont02 = 3;
+	float boostTimer1;
+	float maxBoostTime1=5.0f;
+	float boostTimer2;
+	float maxBoostTime2 = 5.0f;
 
 	Color colourCar01 = Color(1.0f, 1.0f, 1.0f);
 	Color colourCar02 = Color(0.2f, 0.2f, 0.2f);
