@@ -416,8 +416,15 @@ void ModulePlayer::ResetGame()
 
 void ModulePlayer::boostControl1(float dt)
 {
-	boostTimer1 += dt;
 
+	if (boostcont01 != 0) {
+		boostTimer1 += dt;
+	}
+	if (boostTimer1 >= maxBoostTime1 && !inpodium) {
+		boostcont01 = 3;
+
+
+	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !inpodium && boostcont01 > 0) {
 		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
 		car01->ApplyEngineForce(100000000.0f);
@@ -425,27 +432,25 @@ void ModulePlayer::boostControl1(float dt)
 		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
 	}
 	
-	if (boostTimer1 <= maxBoostTime1 && !inpodium && !0) {
-		boostcont01 = 3;
-	
-		
-	}
+
 }
 
 void ModulePlayer::boostControl2(float dt)
 {
-	boostTimer2 += dt;
+	if (boostcont02 != 0) {
+		boostTimer2 += dt;
+	}
+	
 
+	if (boostTimer2 >= maxBoostTime2) {
+		boostcont02 = 3;
+
+	}
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN && !inpodium && boostcont02 > 0) {
 		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
 		car02->ApplyEngineForce(100000000.0f);
 		boostcont02--;
 		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
-	}
-
-	if (boostTimer2 >= maxBoostTime2 && !inpodium) {
-		boostcont02 = 3;
-
 	}
 
 

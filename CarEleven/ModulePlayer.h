@@ -70,7 +70,7 @@ private:
 	int boostcont01 = 3;
 	int boostcont02 = 3;
 	float boostTimer1;
-	float maxBoostTime1=5.0f;
+	float maxBoostTime1= 5.0f;
 	float boostTimer2;
 	float maxBoostTime2 = 5.0f;
 
