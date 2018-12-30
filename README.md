@@ -4,7 +4,7 @@
 
 Thank you for downloading!
 
-This is a sumo car game, the goal is to take the other car off the arena. Only one can win!
+CarEleven is a sumo car game, the goal is to take the other car off the arena. Only one can win!
 
 ## Gameplay
 
