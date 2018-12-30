@@ -12,6 +12,7 @@ The players' cars have a shovel on the front to make easier the task of tossing 
 the ability to boost to make throwing the opponent off the stage easier. When a player gets the boost it will be indicated with a sound 
 and the cars' wheels will turn green. Each player can boost three times before they run out of it, but they can also
 obtain one aditional boost if they break a capsule that will appear in the arena every once in a while.
+You need to have certain speed when boosting to make the force of the boost more efective.
 
 Be careful with the rotating blades on the sides of the arena or they will toss you off.
 
