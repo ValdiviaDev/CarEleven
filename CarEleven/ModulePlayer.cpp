@@ -140,7 +140,7 @@ VehicleInfo ModulePlayer::DefineDefaultVehicleInfo()
 	car.wheels[3].steering = false;
 
 	//Wheel colour
-	car.wheelColour = Green;
+	car.wheelColour = Blue;
 
 	return car;
 }
@@ -386,6 +386,14 @@ void ModulePlayer::SetEndPodium(int carLost)
 	App->audio->PlayMusic("Assets/Audio/Music/ending_theme.ogg", 1.0F);
 	App->audio->PlayFx(App->audio->GetFX().endGameSound, 0);
 
+	//Boost stuff
+	boostcont01 = 0;
+	boostcont02 = 0;
+	boostTimer1 = 0.0f;
+	boostTimer1 = 0.0f;
+	car01->info.wheelColour = Blue;
+	car02->info.wheelColour = Blue;
+
 }
 
 void ModulePlayer::ResetGame()
@@ -417,20 +425,28 @@ void ModulePlayer::ResetGame()
 void ModulePlayer::boostControl1(float dt)
 {
 
-	if (boostcont01 == 0) {
+	if (boostcont01 == 0 && !inpodium)
 		boostTimer1 += dt;
-		car01->info.wheelColour = Blue;
-	}
+
 	if (boostTimer1 >= maxBoostTime1 && !inpodium) {
 		boostcont01 = 3;
 		boostTimer1 = 0.0f;
 		car01->info.wheelColour = Green;
+
+		//Sound Get Boost
+		App->audio->PlayFx(App->audio->GetFX().getBoost);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !inpodium && boostcont01 > 0) {
 		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
 		car01->ApplyEngineForce(100000000.0f);
 		boostcont01--;
-		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
+
+		if (boostcont01 == 0) {
+			//Wheel colour change and sound
+			car01->info.wheelColour = Blue;
+			App->audio->PlayFx(App->audio->GetFX().runOutBoost);
+		}
+
 	}
 	
 
@@ -438,23 +454,28 @@ void ModulePlayer::boostControl1(float dt)
 
 void ModulePlayer::boostControl2(float dt)
 {
-	if (boostcont02 == 0) {
+	if (boostcont02 == 0 && !inpodium)
 		boostTimer2 += dt;
-		car02->info.wheelColour = Blue;
-	}
 	
 
 	if (boostTimer2 >= maxBoostTime2) {
 		boostcont02 = 3;
 		boostTimer2 = 0.0f;
-		
+		car02->info.wheelColour = Green;
 
+		//Sound Get Boost
+		App->audio->PlayFx(App->audio->GetFX().getBoost);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN && !inpodium && boostcont02 > 0) {
 		App->audio->PlayFx(App->audio->GetFX().boostSound, 0);
 		car02->ApplyEngineForce(100000000.0f);
 		boostcont02--;
-		//car01->vehicle->getRigidBody()->setLinearVelocity(btVector3(0.0f, 0.0f, 10.0f));
+
+		if (boostcont02 == 0) {
+			//Wheel colour change and sound
+			car02->info.wheelColour = Blue;
+			App->audio->PlayFx(App->audio->GetFX().runOutBoost);
+		}
 	}
 
 

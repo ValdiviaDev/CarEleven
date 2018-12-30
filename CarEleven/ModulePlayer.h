@@ -56,8 +56,8 @@ public:
 	void boostControl1(float dt);
 	void boostControl2(float dt);
 
-	int boostcont01 = 3;
-	int boostcont02 = 3;
+	int boostcont01 = 0;
+	int boostcont02 = 0;
 
 
 private:
@@ -72,9 +72,9 @@ private:
 	bool inpodium = false;
 	
 	float boostTimer1=0.0f;
-	float maxBoostTime1= 5.0f;
+	float maxBoostTime1= 20.0f;
 	float boostTimer2=0.0f;
-	float maxBoostTime2 = 5.0f;
+	float maxBoostTime2 = 20.0f;
 
 	Color colourCar01 = Color(1.0f, 1.0f, 1.0f);
 	Color colourCar02 = Color(0.2f, 0.2f, 0.2f);

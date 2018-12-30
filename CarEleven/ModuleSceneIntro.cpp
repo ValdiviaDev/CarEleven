@@ -95,7 +95,13 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		isCapsuleRendering = false;
 		capsuleTimer = 0.0f;
 		App->audio->PlayFx(App->audio->GetFX().breakCapsule, 0);
+
+		//Boost
 		App->player->boostcont01++;
+		car01->info.wheelColour = Green;
+
+		//Sound Get Boost
+		App->audio->PlayFx(App->audio->GetFX().getBoost);
 	}
 
 	if (body2 == (PhysBody3D*)car02 && body1 == capsulePB && isCapsuleRendering)
@@ -103,7 +109,13 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		isCapsuleRendering = false;
 		capsuleTimer = 0.0f;
 		App->audio->PlayFx(App->audio->GetFX().breakCapsule, 0);
+
+		//Boost
 		App->player->boostcont02++;
+		car02->info.wheelColour = Green;
+
+		//Sound Get Boost
+		App->audio->PlayFx(App->audio->GetFX().getBoost);
 	}
 }
 

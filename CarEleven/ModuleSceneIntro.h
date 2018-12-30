@@ -63,7 +63,7 @@ private:
 	PhysBody3D* capsulePB = nullptr;
 
 	//Timer for the bonus sphere to appear
-	float maxCapsuleTime = 20.0f;
+	float maxCapsuleTime = 27.0f;
 
 public:
 	//Bonus sphere
