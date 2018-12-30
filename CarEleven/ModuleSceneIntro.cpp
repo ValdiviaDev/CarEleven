@@ -95,6 +95,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		isCapsuleRendering = false;
 		capsuleTimer = 0.0f;
 		App->audio->PlayFx(App->audio->GetFX().breakCapsule, 0);
+		App->player->boostcont01++;
 	}
 
 	if (body2 == (PhysBody3D*)car02 && body1 == capsulePB && isCapsuleRendering)
@@ -102,6 +103,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		isCapsuleRendering = false;
 		capsuleTimer = 0.0f;
 		App->audio->PlayFx(App->audio->GetFX().breakCapsule, 0);
+		App->player->boostcont02++;
 	}
 }
 

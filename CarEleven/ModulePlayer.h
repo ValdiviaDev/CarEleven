@@ -56,6 +56,9 @@ public:
 	void boostControl1(float dt);
 	void boostControl2(float dt);
 
+	int boostcont01 = 3;
+	int boostcont02 = 3;
+
 
 private:
 
@@ -67,8 +70,7 @@ private:
 	int livesCar01 = 3;
 	int livesCar02 = 3;
 	bool inpodium = false;
-	int boostcont01 = 3;
-	int boostcont02 = 3;
+	
 	float boostTimer1=0.0f;
 	float maxBoostTime1= 5.0f;
 	float boostTimer2=0.0f;
