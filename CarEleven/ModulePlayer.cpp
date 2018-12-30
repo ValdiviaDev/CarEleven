@@ -417,7 +417,7 @@ void ModulePlayer::ResetGame()
 void ModulePlayer::boostControl1(float dt)
 {
 
-	if (boostcont01 != 0) {
+	if (boostcont01 == 0) {
 		boostTimer1 += dt;
 	}
 	if (boostTimer1 >= maxBoostTime1 && !inpodium) {
@@ -437,7 +437,7 @@ void ModulePlayer::boostControl1(float dt)
 
 void ModulePlayer::boostControl2(float dt)
 {
-	if (boostcont02 != 0) {
+	if (boostcont02 == 0) {
 		boostTimer2 += dt;
 	}
 	

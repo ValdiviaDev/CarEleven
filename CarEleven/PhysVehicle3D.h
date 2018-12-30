@@ -46,6 +46,7 @@ struct VehicleInfo
 	Color chassisColour = { 255,255,255,255 };
 	Color shovelColour = { 255,255,255,255 };
 	Color wheelColour = { 255,255,255,255 };
+	Color wheelColourNoBoost{ 0,0,0,255 };
 };
 
 
