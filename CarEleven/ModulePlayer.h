@@ -50,6 +50,7 @@ public:
 
 	//Reset game
 	void ResetGame();
+	void InGameReset();
 
 	//Boost
 

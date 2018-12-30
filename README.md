@@ -20,6 +20,9 @@ their shovel painted green while the one thats losing will have it painted red.
 
 ## Controls
 
+* R: 
+  - Reset the game during the main loop of the game or play again when the game is finished.
+
 * Car1: 
  - WASD for movement.
  - Left SHIFT for stopping.

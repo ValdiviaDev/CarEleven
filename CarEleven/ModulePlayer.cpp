@@ -40,10 +40,12 @@ update_status ModulePlayer::Update(float dt)
 	UpdateCar01(dt);
 	UpdateCar02(dt);
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN && inpodium == true)
-		ResetGame();
-
-	
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		if (inpodium)
+			ResetGame();
+		else
+			InGameReset();
+	}
 
 	//Title
     char title[80];
@@ -412,7 +414,7 @@ void ModulePlayer::ResetGame()
 	App->camera->Position.x = 0;
 	App->camera->Position.y = 0;
 	App->camera->Position.z = 0;
-	App->camera->Move(vec3(75.0f, 60.0f, -5.0f));
+	App->camera->Move(vec3(75.0f, 60.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	inpodium = false;
@@ -420,6 +422,23 @@ void ModulePlayer::ResetGame()
 	//Play the level theme and restart FX
 	App->audio->PlayFx(App->audio->GetFX().restartSound, 0);
 	App->audio->PlayMusic("Assets/Audio/Music/level_theme.ogg", 1.0F);
+}
+
+void ModulePlayer::InGameReset()
+{
+	ResetGame();
+
+	//Boost stuff
+	boostcont01 = 0;
+	boostcont02 = 0;
+	boostTimer1 = 0.0f;
+	boostTimer1 = 0.0f;
+	car01->info.wheelColour = Blue;
+	car02->info.wheelColour = Blue;
+
+	//Reset the capsule
+	App->scene_intro->isCapsuleRendering = false;
+	App->scene_intro->capsuleTimer = 0.0f;
 }
 
 void ModulePlayer::boostControl1(float dt)
@@ -458,7 +477,7 @@ void ModulePlayer::boostControl2(float dt)
 		boostTimer2 += dt;
 	
 
-	if (boostTimer2 >= maxBoostTime2) {
+	if (boostTimer2 >= maxBoostTime2 && !inpodium) {
 		boostcont02 = 3;
 		boostTimer2 = 0.0f;
 		car02->info.wheelColour = Green;
