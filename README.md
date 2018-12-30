@@ -19,7 +19,7 @@ Be careful with the rotating blades on the sides of the arena or they will toss 
 Each player has three lives. The loser will be the one that loses their lives first. During the game the player that's winning will have
 their shovel painted green while the one thats losing will have it painted red.
 
-## Controls and debug
+## Controls
 
 * R: 
   - Reset the game during the main loop of the game or play again when the game is finished.
@@ -33,9 +33,6 @@ their shovel painted green while the one thats losing will have it painted red.
  - Direction arrows for movement.
  - Right SHIFT for stopping.
  - L for boosting.
-
-* F1
- - Show level constraint lines.
 
 ## Authors 
 
