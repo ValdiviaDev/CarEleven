@@ -392,7 +392,7 @@ void ModulePlayer::SetEndPodium(int carLost)
 	boostcont01 = 0;
 	boostcont02 = 0;
 	boostTimer1 = 0.0f;
-	boostTimer1 = 0.0f;
+	boostTimer2 = 0.0f;
 	car01->info.wheelColour = Blue;
 	car02->info.wheelColour = Blue;
 
